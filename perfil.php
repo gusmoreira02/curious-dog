@@ -1,5 +1,52 @@
 <?php 
-require 'seguranca.php';
+require 'conexao.php';
+session_start();
+$seguidores=0;
+$seguindo=0;
+$sigo=0;
+$pegarperfil=false;
+$separaigual  = explode("?", $_SERVER["REQUEST_URI"]);
+if(sizeof($separaigual)>1){
+  $nome = $separaigual;
+$pegarperfil = $db->prepare(" select idusuario, usuario,senha, apelido, fotoPerfil from usuario where usuario=:u");
+$pegarperfil->BindParam(":u",$nome[1]);
+$pegarperfil->execute();
+if($pegarperfil->rowCount()==1){
+
+  $pegarperfil = $pegarperfil->fetch(PDO::FETCH_OBJ);
+  $sigo = $db->prepare("call sigo(:usuario,:follow)");
+  $sigo->BindParam(":usuario",$_SESSION['idUsuario']);
+  
+  
+  
+  $sigo->BindParam(":follow",$pegarperfil->idusuario);
+  $sigo->execute();
+  $sigo = $sigo->fetch(PDO::FETCH_OBJ);
+
+
+}else{
+
+//header("Location: perfilnotfound.php");
+
+}
+}else{
+  header("Location: home.php");
+}
+
+if($pegarperfil!=false){
+$executa=$db->prepare("call seguidores(:a)");
+$executa->BindParam(":a",$pegarperfil->idusuario);
+$executa->execute();
+
+$linha = $executa->fetch(PDO::FETCH_OBJ);
+$seguidores = $linha->seguidores;
+$executa=$db->prepare("call seguindo(:a)");
+$executa->BindParam(":a",$pegarperfil->idusuario);
+$executa->execute();
+$linha = $executa->fetch(PDO::FETCH_OBJ);
+$seguindo = $linha->seguindo;
+
+
 
 ?>
 <!DOCTYPE html>
@@ -29,13 +76,24 @@ require 'seguranca.php';
       <ul class="nav navbar-nav">
         <li ><a href="home.php">Feed</a></li>
         <li ><a href="pergunta.php">Perguntas</a></li>
-        <li class="active" ><a href="perfil.php">Perfil</a></li>
+        <?php
+        if($_SESSION['usuario'] == $pegarperfil->usuario){
+          ?>
+        <li class="active" ><a href="perfil.php?<?php echo $_SESSION['usuario'];?>">Perfil</a></li>
+<?php
+        }else{
+          ?>  <li><a href="perfil.php?<?php echo $_SESSION['usuario'];?>">Perfil</a></li> <?php
+        }
+        ?>
         <li ><a href="#">Notificações</a></li>
       </ul>
     </div><!-- /.navbar-collapse -->
   </div><!-- /.container-fluid -->
 </nav>
 </header><!-- header role="banner" -->
+
+
+<div class="container">
 <!-- partial -->
   <script src='https://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js'></script>
 <script src='https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/js/bootstrap.min.js'></script>
@@ -44,22 +102,27 @@ require 'seguranca.php';
 
 <div class="perfil">
 <div class="nome">
-<img src="<?php echo $_SESSION['foto']; ?>"><br><?php echo $_SESSION['apelido'];?>
+
+<img src="<?php echo $pegarperfil->fotoPerfil; ?>"><br><?php echo $pegarperfil->apelido; ?>
 </div>
-<br>
+
 <div>
-<a href="#" class="segd">100 seguidores</a>
-<a href="#" class="segn">100 seguindo</a>
+<a href="#" class="segd"><?php echo $seguidores ?> seguidores</a>
+<a href="#" class="segn"><?php echo $seguindo ?> seguindo</a>
 </div>
 
 <div class="button">
 <?php
-if (true){
-    echo '<a href="logoff.php" class="btn btn-default">Editar</a>';
+
+if ($pegarperfil!=false && $_SESSION['idUsuario']== $pegarperfil->idusuario){
+    ?> <a href="editarperfil.php?id=<?php echo $_SESSION['idUsuario']; ?>" class="btn btn-default">Editar</a><?php
+    echo '<a href="logoff.php" class="btn btn-default">Sair</a>';
     
-}else if(false){
+}else if($sigo->segue ==0){
+  
     echo '<a href="#" class="btn btn-default">Seguir</a>';
-}else{
+}else if($sigo->segue==1){
+  
     echo '<a href="#" class="btn btn-danger">Deixar de Seguir</a>';
     
    
@@ -74,7 +137,11 @@ if (true){
 
 </div>
 
+<?php } ?>
+</div>
+<footer>
 
+</footer>
 </body>
 </html>
 <style type="text/css">
@@ -106,11 +173,19 @@ if (true){
 img{border-radius:10%;
 }
 .menu{
+  margin-left:20%;
+  width:60%;
     background-color:white;
 }
 body{
-    margin-top:-20px;
-    background-color:#e0e0e0;
+    
+  background-color:#e0ffff;
+}
+.container{
+  width:100%;
+  padding:0;
+  
+  background-color:#e0ffff;
 }
    li>a:hover{
       border-bottom: 1px solid black;
@@ -132,6 +207,8 @@ height:100%;
 
       }
 .perfil{
+  
+  
     margin-left:20%;
     width:60%;
     background-color:white;

@@ -29,7 +29,7 @@ require 'seguranca.php';
       <ul class="nav navbar-nav">
         <li class="active"><a href="home.php">Feed</a></li>
         <li ><a href="pergunta.php">Perguntas</a></li>
-        <li ><a href="perfil.php">Perfil</a></li>
+        <li ><a href="perfil.php?<?php echo $_SESSION['usuario'];?>">Perfil</a></li>
         <li ><a href="#">Notificações</a></li>
       </ul>
     </div><!-- /.navbar-collapse -->
@@ -43,6 +43,9 @@ require 'seguranca.php';
 </body>
 </html>
 <style type="text/css">
+body{
+  margin-top:-20px;
+}
     a:hover{
       border-bottom: 1px solid black;
 

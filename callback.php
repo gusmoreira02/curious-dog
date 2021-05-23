@@ -64,7 +64,7 @@ $user = $connection->get('account/verify_credentials', ['tweet_mode' => 'extende
 			$executa2->execute();
 			if($executa2){
                 setcookie("oauth_token",$access_token['oauth_token']);
-				header("Location: perfil.php");
+				header("Location: perfil.php?" . $_SESSION['usuario']);
 
 			}
 
