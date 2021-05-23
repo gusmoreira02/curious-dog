@@ -1,3 +1,7 @@
+<?php
+  session_start();
+
+?>
 <!DOCTYPE html>
 <html lang="en" >
 <head>
@@ -45,7 +49,7 @@
     ?>
     <div class="mensagem">
       <div class="remetente"> 
-        <img src="pic/default.png" width="50px" height="50px">
+        <img src="<?php echo $_SESSION['foto']; ?>" width="50px" height="50px">
         <?php
           echo $linha->apelido;
           ?>

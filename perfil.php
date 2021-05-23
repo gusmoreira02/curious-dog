@@ -1,3 +1,7 @@
+<?php 
+session_start();
+
+?>
 <!DOCTYPE html>
 <html lang="en" >
 <head>
@@ -40,7 +44,7 @@
 
 <div class="perfil">
 <div class="nome">
-<img src="pic/default.png" width="150" height="150"><br>Nome da pessoa
+<img src="<?php echo $_SESSION['foto']; ?>"><br><?php echo $_SESSION['apelido'];?>
 </div>
 <br>
 <div>
@@ -51,7 +55,7 @@
 <div class="button">
 <?php
 if (true){
-    echo '<a href="#" class="btn btn-default">Editar</a>';
+    echo '<a href="logoff.php" class="btn btn-default">Editar</a>';
     
 }else if(false){
     echo '<a href="#" class="btn btn-default">Seguir</a>';
