@@ -1,6 +1,6 @@
 <?php
-  session_start();
-
+  
+require 'seguranca.php';
 ?>
 <!DOCTYPE html>
 <html lang="en" >
