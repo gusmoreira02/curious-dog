@@ -54,34 +54,38 @@ $seguindo = $linha->seguindo;
 <head>
   <meta charset="UTF-8">
   <title>CuriousDog</title>
-
+<?php 
+require 'cssheader.php';
+?>
 </head>
 <body>
     <?php 
     require 'menu.php';
     ?>
-<div class="container">
+
 
 
 
 <div class="perfil">
 <div class="nome">
 
-<img src="<?php echo $pegarperfil->fotoPerfil; ?>" width="200" height="200"><span class="usuario"><?php echo $pegarperfil->apelido; ?></span>
+<img class="imgperfil" src="<?php echo $pegarperfil->fotoPerfil; ?>" ><span class="usuario"><?php echo $pegarperfil->apelido; ?></span>
 
 </div>
 
-<div>
+<div class="info">
 <a href="#" class="segd"><?php echo $seguidores ?> seguidores</a>
 <a href="#" class="segn"><?php echo $seguindo ?> seguindo</a>
-</div>
 
-<div class="button">
+
+
+
+
 <?php
 
 if ($pegarperfil!=false && $_SESSION['idUsuario']== $pegarperfil->idusuario){
     ?> <a href="editarperfil.php?id=<?php echo $_SESSION['idUsuario']; ?>" class="btn btn-light">Editar</a><?php
-    echo '<a href="logoff.php" class="btn btn-danger">Sair</a>';
+    
     
 }else if($sigo->segue ==0){
   
@@ -102,29 +106,20 @@ if ($pegarperfil!=false && $_SESSION['idUsuario']== $pegarperfil->idusuario){
 </div>
 
 <?php } ?>
-</div>
-<footer>
 
-</footer>
+
 </body>
 </html>
 <style type="text/css">
 .button{
+    width:30%;
     
-    text-align:center;
+    
+    
+    
 }
-.segd{
-    margin-left:1%;
 
-    
-    
-}
-.segn{
-    margin-right:1%;
-    float:right;
-    
-    
-}
+
 
 .segd:hover , .segn:hover{
     text-decoration:none;
@@ -136,8 +131,8 @@ if ($pegarperfil!=false && $_SESSION['idUsuario']== $pegarperfil->idusuario){
     
 }
 .nome{
-    width: 50%;
-    
+    width: 35%;
+    float:left;
 }
 
 body{
@@ -147,18 +142,47 @@ body{
 .perfil{
   
     
-    margin-left:20%;
-    width:60%;
+    
+    width:70vw;
+    margin-left:15%;
     background-color:white;
+
+    height:10vw;
+    
+    
+    
 
 }
 .segn, .segd{
-    float: right;
+    
+    margin-right:1%;
+    
 
 }
 .usuario{
-    font-size: clamp(1em, 1em + 1vw, 1.5em);
+    font-size: clamp(1.5em, 1em + 1vw, 2em);
     margin-left: 1%;
 
+}
+
+.info{
+  
+  float:right;
+  width:40%;
+  margin-right:2vw;
+  padding-top:4vw;
+  
+  
+  font-size: clamp(0.5em, 1em + 1vw, 1em);
+  
+  
+  
+}
+.imgperfil{
+  width:10vw;
+  height:10vw;
+}
+.btn{
+  text-align:center;
 }
 </style>
