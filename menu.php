@@ -1,4 +1,8 @@
+<?php
 
+$url=$_SERVER["REQUEST_URI"];
+
+?>
   <div class="header">
   <div>
   <img id="logo" src="pic/logo4.png"  alt="Logo Thing main logo">
@@ -14,8 +18,23 @@
 
         <div class="collapse navbar-collapse" id="navbarCollapse">
             <div class="navbar-nav">
-                <a href="home.php" class="nav-item nav-link active">Início</a>
-                <a href="pergunta.php" class="nav-item nav-link">Perguntas</a>
+            <?php 
+            if($url =="/curiousdog/home.php"){
+              echo '<a href="home.php" class="nav-item nav-link active">Início</a>';
+            }else{
+              echo '<a href="home.php" class="nav-item nav-link ">Início</a>';
+            }
+            if($url == "/curiousdog/pergunta.php"){
+echo '  <a href="pergunta.php" class="nav-item nav-link active">Perguntas</a>';
+            }else{
+              echo '<a href="pergunta.php" class="nav-item nav-link">Perguntas</a>';
+            }
+
+
+            
+            ?>
+                
+              
                 <a href="#" class="nav-item nav-link">Procurar</a>
                 <a href="#" class="nav-item nav-link disabled" tabindex="-1">Notificações</a>
             </div>

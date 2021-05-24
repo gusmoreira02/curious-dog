@@ -18,7 +18,8 @@ require 'menu.php';
 <div class="container">
 <?php
   include("conexao.php");
-  $executa=$db->prepare("select mensagem, usuario, fotoPerfil, apelido, dataPergunta from pergunta as p inner join usuario as u on p.remetente = u.idusuario");
+  $executa=$db->prepare("select mensagem, usuario, fotoPerfil, apelido, dataPergunta from pergunta as p inner join usuario as u on p.remetente = u.idusuario left join resposta r on p.idpergunta=r.pergunta where p.destinatario=:id and r.pergunta is null;");
+  $executa->BindParam(":id",$_SESSION['idUsuario']);
   $executa->execute();
 
   while($linha=$executa->fetch(PDO::FETCH_OBJ)){

@@ -33,6 +33,10 @@ $user = $connection->get('account/verify_credentials', ['tweet_mode' => 'extende
 	$_SESSION['usuario'] = $array['screen_name'];
 	$_SESSION['apelido'] = $array['name'];
 	$_SESSION['foto'] = $array['profile_image_url'];
+	$varfoto = explode("_normal", $_SESSION['foto']);
+	$foto = $varfoto[0] . $varfoto[1];
+	$_SESSION['foto'] = $foto;
+	
 	
 
 	require 'conexao.php';
@@ -49,7 +53,7 @@ $user = $connection->get('account/verify_credentials', ['tweet_mode' => 'extende
 			$_SESSION['apelido'] = $linha->apelido;
 			$_SESSION['foto'] = $linha->fotoPerfil;
 			$_SESSION['idUsuario'] = $linha->idusuario;
-			header("Location: perfil.php");
+		header("Location: perfil.php");
 
 
 		}else{
