@@ -1,56 +1,66 @@
-<!DOCTYPE html>
-<html lang="en" >
-<head>
-  <meta charset="UTF-8">
-  <title>CuriousDog</title>
-  <link rel='stylesheet' href='https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css'><link rel="stylesheet" href="./style.css">
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+<script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+<style>
+    .bs-example{
+        margin: 20px;
+    }
+    body{
+        padding-bottom: 70px;
+    }
+</style>
 
-</head>
-<body>
-<!-- partial:index.partial.html -->
-<header role="banner">
-  <img id="logo-main" src="https://s3-us-west-2.amazonaws.com/s.cdpn.io/32877/logo-thing.png" width="200" alt="Logo Thing main logo">
-<nav id="navbar-primary" class="navbar navbar-default" role="navigation">
-  <div class="container-fluid">
-    <!-- Brand and toggle get grouped for better mobile display -->
-    <div class="navbar-header">
-      <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navbar-primary-collapse">
-        <span class="sr-only">Toggle navigation</span>
-        <span class="icon-bar"></span>
-        <span class="icon-bar"></span>
-        <span class="icon-bar"></span>
-      </button>
-    </div>
-    <div class="collapse navbar-collapse" id="navbar-primary-collapse">
-      <ul class="nav navbar-nav">
-        <li class="active"><a href="home.php">Feed</a></li>
-        <li ><a href="pergunta.php">Perguntas</a></li>
-        <li ><a href="perfil.php">Perfil</a></li>
-        <li ><a href="#">Notificações</a></li>
-      </ul>
-    </div><!-- /.navbar-collapse -->
-  </div><!-- /.container-fluid -->
-</nav>
-</header><!-- header role="banner" -->
-<!-- partial -->
-  <script src='https://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js'></script>
-<script src='https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/js/bootstrap.min.js'></script>
+  <div class="header">
+  <div>
+  <img id="logo" src="pic/logo4.png"  alt="Logo Thing main logo">
+</div>
+</div>
+
+<div class="bs-example">
+    <nav class="navbar navbar-expand-md navbar-dark bg-dark fixed-bottom">
+        <a href="perfil.php?<?php echo $_SESSION['usuario']; ?>" class="navbar-brand"><?php echo $_SESSION['apelido']; ?></a>
+        <button type="button" class="navbar-toggler" data-toggle="collapse" data-target="#navbarCollapse">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+
+        <div class="collapse navbar-collapse" id="navbarCollapse">
+            <div class="navbar-nav">
+                <a href="home.php" class="nav-item nav-link active">Início</a>
+                <a href="pergunta.php" class="nav-item nav-link">Perguntas</a>
+                <a href="#" class="nav-item nav-link">Procurar</a>
+                <a href="#" class="nav-item nav-link disabled" tabindex="-1">Notificações</a>
+            </div>
+            <div class="navbar-nav ml-auto">
+                <a href="#" class="nav-item nav-link">Sair</a>
+            </div>
+        </div>
+    </nav>
+
+
+
 <style type="text/css">
-    a:hover{
-      border-bottom: 1px solid black;
+  body{
+    background-color: #141211;
 
-    }
-    .navbar-default .navbar-nav>.active>a{
-      background-color: white;
+  }
+  .fonte{
+    font-size: 110%;
 
-      border-bottom: 1px solid black;
+  }
+  #logo{
+      
+    text-align: center;
+    width: 26%;
+    margin-left: 37%;
 
-    }
-      .navbar-default .navbar-nav>.active>a:hover{
-        background-color: white;
 
-      }
+  }
+  .header{
+   background-color: #141211;
+   
+
+  }
 
 </style>
-</body>
-</html>

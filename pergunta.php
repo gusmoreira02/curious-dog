@@ -1,59 +1,30 @@
-<?php
-  
-require 'seguranca.php';
-?>
-<!DOCTYPE html>
-<html lang="en" >
+<<!DOCTYPE html>
+<html>
 <head>
-  <meta charset="UTF-8">
-  <title>CuriousDog</title>
-  <link rel='stylesheet' href='https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css'><link rel="stylesheet" href="./style.css">
-
+  <meta charset="utf-8">
+  <title></title>
 </head>
 <body>
-<!-- partial:index.partial.html -->
-<header role="banner">
-  <img id="logo-main" src="https://s3-us-west-2.amazonaws.com/s.cdpn.io/32877/logo-thing.png" width="200" alt="Logo Thing main logo">
-<nav id="navbar-primary" class="navbar navbar-default" role="navigation">
-  <div class="container-fluid">
-    <!-- Brand and toggle get grouped for better mobile display -->
-    <div class="navbar-header">
-      <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navbar-primary-collapse">
-        <span class="sr-only">Toggle navigation</span>
-        <span class="icon-bar"></span>
-        <span class="icon-bar"></span>
-        <span class="icon-bar"></span>
-      </button>
-    </div>
-    <div class="collapse navbar-collapse" id="navbar-primary-collapse">
-      <ul class="nav navbar-nav">
-        <li ><a href="home.php">Feed</a></li>
-        <li class="active"><a href="pergunta.php">Perguntas</a></li>
-        <li ><a href="perfil.php?<?php echo $_SESSION['usuario'];?>">Perfil</a></li>
-        <li ><a href="#">Notificações</a></li>
-      </ul>
-    </div><!-- /.navbar-collapse -->
-  </div><!-- /.container-fluid -->
-</nav>
-</header><!-- header role="banner" -->
-<!-- partial -->
-  <script src='https://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js'></script>
-<script src='https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/js/bootstrap.min.js'></script>
+  <?php
+  
+require 'seguranca.php';
+require 'menu.php';
+?>
 
+
+<div class="container">
 <?php
   include("conexao.php");
-  $executa=$db->prepare("select mensagem, fotoPerfil, apelido, dataPergunta from pergunta as p inner join usuario as u on p.remetente = u.idusuario");
+  $executa=$db->prepare("select mensagem, usuario, fotoPerfil, apelido, dataPergunta from pergunta as p inner join usuario as u on p.remetente = u.idusuario");
   $executa->execute();
 
   while($linha=$executa->fetch(PDO::FETCH_OBJ)){
     ?>
     <div class="mensagem">
       <div class="remetente"> 
-        <img src="<?php echo $_SESSION['foto']; ?>" width="50px" height="50px">
-        <?php
-          echo $linha->apelido;
-          ?>
-       
+          <a class="usuario" href="perfil.php?<?php echo $linha->usuario; ?>"> <img src="<?php echo $linha->fotoPerfil ?>"  width="50px" height="50px"><b> <?php echo $linha->apelido ?></b></a>
+
+
         <div class="data">
           <?php
           echo $linha->dataPergunta;
@@ -67,65 +38,69 @@ require 'seguranca.php';
   ?>
 
   </div>
-      <a class="btn btn-default botao">Responder</a>   
-        
-      
+      <a class="btn btn-default botao">Responder</a>
+
+
     </div>
     <br>
     <?php
   }
 
 ?>
+</div>
 
 </body>
-
 </html>
 <style type="text/css">
-body{
-  margin-top:-20px;
-}
-    li a:hover{
-      border-bottom: 1px solid black;
 
-    }
-    .navbar-default .navbar-nav>.active>a{
-      background-color: white;
+      .usuario, .usuario:hover{
+        text-decoration: none;
+        color: white;
 
-      border-bottom: 1px solid black;
-
-    }
-      .navbar-default .navbar-nav>.active>a:hover{
-        background-color: white;
 
       }
+      .usuario img{
+        border-radius: 50%;
+
+      }
+
       .mensagem{
-        width: 68%;
-        height: 15%;
-        margin-left: 16%;
-        background-color: #EEEEEE;
-        border-left: 4px solid black;
+
+        width: 100%;
+        background-color: #141211;
+        border-left: 3px solid white;
+        margin-top: 2%;
+
 
 
       }
       .remetente{
+        color: white;
         margin-left: 1%;
+        font-size: clamp(1em, 1em + 2vw, 1.5em);
 
 
       }
       .data{
+        color: white;
         float: right;
-        margin-right: 1%;
+        margin-right: 1px;
         margin-top: 1.5%;
         opacity: 60%;
+        font-size: clamp(0.3em, 0.5em + 1vw, 0.7em);
 
       }
       .conteudo{
-        width: 80%;
-        margin-left: 8% ;
-        border-bottom: 0.8px solid black;
+        color: white;
+        width: 90%;
+        margin-left: 5%;
+        border-bottom: 0.8px solid white;
+        font-size: clamp(1em, 1em + 1vw, 1.5em);
+        word-wrap: break-word;
 
       }
       .botao{
+        background-color: whitesmoke;
        margin-top: 1%;
        margin-left: 45%;
 
