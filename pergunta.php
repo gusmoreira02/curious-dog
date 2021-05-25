@@ -5,7 +5,12 @@
   <title></title>
   <?php
   require 'cssheader.php';
+  
   ?>
+  <link href="fontawesome/css/fontawesome.css" rel="stylesheet">
+  <link href="fontawesome/css/brands.css" rel="stylesheet">
+  <link href="fontawesome/css/solid.css" rel="stylesheet">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 </head>
 <body>
   <?php
@@ -18,7 +23,7 @@ require 'menu.php';
 <div class="container">
 <?php
   include("conexao.php");
-  $executa=$db->prepare("select mensagem, usuario, fotoPerfil, apelido, dataPergunta from pergunta as p inner join usuario as u on p.remetente = u.idusuario left join resposta r on p.idpergunta=r.pergunta where p.destinatario=:id and r.pergunta is null;");
+  $executa=$db->prepare("select idpergunta, mensagem, usuario, fotoPerfil, apelido, dataPergunta from pergunta as p inner join usuario as u on p.remetente = u.idusuario left join resposta r on p.idpergunta=r.pergunta where p.destinatario=:id and r.pergunta is null;");
   $executa->BindParam(":id",$_SESSION['idUsuario']);
   $executa->execute();
 
@@ -42,7 +47,8 @@ require 'menu.php';
   ?>
 
   </div>
-      <a class="btn btn-default botao">Responder</a>
+      <button onclick='modal(<?php echo $linha->idpergunta ?>)' type="button" class="fas fa-reply botao " data-toggle="modal" data-target="#exampleModal" id="modaltrigger"></button>
+      
 
 
     </div>
@@ -52,7 +58,34 @@ require 'menu.php';
 
 ?>
 </div>
-
+<!-- Modal -->
+<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Responder <span id="titl"></span> </h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+      <div id="mens"></div>
+      <label id="idpergunta" ></label>
+      <div id="texto">
+<textarea class=" .w-75" rows="8" cols="" id="resp"></textarea>
+</div>
+      </div>
+      <div class="modal-footer">
+      <div class="form-check form-switch">
+  <input class="form-check-input" type="checkbox" id="post">
+  
+</div>
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Fechar</button>
+        <button type="button" class="btn btn-primary" onclick="responder()">Responder</button>
+      </div>
+    </div>
+  </div>
+</div>
 </body>
 </html>
 <style type="text/css">
@@ -103,12 +136,73 @@ require 'menu.php';
         word-wrap: break-word;
 
       }
-      .botao{
-        background-color: whitesmoke;
+      .botao , .botao:hover{
+        text-decoration:none;
        margin-top: 1%;
-       margin-left: 45%;
+       margin-right: 2%;
+       background-color:transparent;
+       border:none;
+       color:white;
+       float:right;
 
+
+      }
+      textarea{
+        width: 100%;
 
       }
 </style>
 
+<script>
+
+ function modal(idpergunta){
+
+ 
+
+  $.ajax({
+  type: "POST",
+  url: "dadopergunta.php",
+  data: {'idpergunta':idpergunta}
+  
+  
+  
+}).done(function(data){
+  
+  var dados = JSON.parse(data);
+  $("#titl").empty();
+  $("#mens").empty();
+  $("#idpergunta").empty();
+  $("#titl").append(dados.apelido);
+  $("#idpergunta").val(dados.id);
+  $("#mens").append(dados.mensagem);
+  
+
+});
+  
+  
+
+ }
+function responder(){
+
+  var idpe = $("#idpergunta").val();
+  
+  var resposta = $("#resp").val();
+  
+
+
+ $.ajax({
+  type: "POST",
+  url: "modalresponder.php",
+  data: {'idpergunta':idpe , 'resposta':resposta}
+  
+  
+  
+}).done(function(data){
+  Location.reload();
+  console.log(data);
+})
+  
+}
+
+
+</script>
