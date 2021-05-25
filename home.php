@@ -57,11 +57,10 @@ require 'menu.php';
         <?php echo $linha->resposta ?>
         
          <div class="curtir">          
-         <a><img src="pic/apagado.png" width="25" height="25"></a>
+         <a><img src="pic/visivel.png" class="like" width="25" height="25"></a>
           </div>
         </div>
-
-        </div>
+</div>
        
           <?php
   }
@@ -141,7 +140,13 @@ require 'menu.php';
      <div>   <img src="pic/1.png" height="30px" width="30px"></div>
      <div><img src="pic/1.png" height="30px" width="30px"></div>
             
+
+
+
      </div>
+
+
+   
 </body>
 </html>
 <style type="text/css">
@@ -427,16 +432,21 @@ z-index: -1;
 .leaf1{
     transform: rotateX(180deg);
 }
-h2{
-    position:absolute ;
-    top:40%;
-    width:100%;
-    font-family: 'Courgette', cursive;
-    font-size:4em;
-    text-align:center;
-    transform:translate ;
-    color:#fff;
-    transform:translateY (-50%);
-}
-</style>
+@keyframes like{
+    0%{opacity: 50%;}
+    50%{opacity: 100%;}
 
+
+}
+.like:active{
+    animation: like 5s ease;
+
+
+}
+.like{
+    opacity: 30%;
+
+
+}
+
+</style>

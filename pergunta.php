@@ -198,7 +198,7 @@ function responder(){
   
   
 }).done(function(data){
-  Location.reload();
+  document.location.reload();
   console.log(data);
 })
   
