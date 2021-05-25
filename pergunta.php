@@ -237,7 +237,10 @@ console.log(post);
 
    ;
   
-  
+}).done(function(data){
+  document.location.reload();
+  console.log(data);
+})
   
   
 

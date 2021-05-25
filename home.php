@@ -57,17 +57,15 @@ require 'menu.php';
         <?php echo $linha->resposta ?>
         
          <div class="curtir">          
-         <a><img src="pic/apagado.png" width="25" height="25"></a>
+         <a><img src="pic/visivel.png" class="like" width="25" height="25"></a>
           </div>
         </div>
-
-        </div>
+</div>
        
           <?php
   }
 
 ?>
-
 </body>
 </html>
 <style type="text/css">
@@ -166,3 +164,6 @@ require 'menu.php';
  
 </style>
 
+}
+
+</style>
