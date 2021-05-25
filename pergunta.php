@@ -1,4 +1,4 @@
-<<!DOCTYPE html>
+<!DOCTYPE html>
 <html>
 <head>
   <meta charset="utf-8">
@@ -47,7 +47,7 @@ require 'menu.php';
   ?>
 
   </div>
-      <button onclick='modal(<?php echo $linha->idpergunta ?>)' type="button" class="fas fa-reply botao " data-toggle="modal" data-target="#exampleModal" id="modaltrigger"></button>
+      <button onclick='modal(<?php echo $linha->idpergunta ?>)' type="button" class="fas fa-reply botao " data-toggle="modal" data-target="#exampleModal" id="<?php echo $linha->idpergunta ?>" ></button>
       
 
 
@@ -69,10 +69,10 @@ require 'menu.php';
         </button>
       </div>
       <div class="modal-body">
-      <div id="mens"></div>
-      <label id="idpergunta" ></label>
+      <label id="mens"></label>
+      <label id="idpergunta" hidden></label>
       <div id="texto">
-<textarea class=" .w-75" rows="8" cols="" id="resp"></textarea>
+<textarea  rows="8" maxlength="500" id="resp" placeholder="Digite aqui sua resposta ... "></textarea>
 </div>
       </div>
       <div class="modal-footer">
@@ -80,12 +80,13 @@ require 'menu.php';
   <input class="form-check-input" type="checkbox" id="post">
   
 </div>
-        <button type="button" class="btn btn-secondary" data-dismiss="modal">Fechar</button>
+        <button type="button" id="fecharmodal" class="btn btn-secondary" data-dismiss="modal">Fechar</button>
         <button type="button" class="btn btn-primary" onclick="responder()">Responder</button>
       </div>
     </div>
   </div>
 </div>
+
 </body>
 </html>
 <style type="text/css">
@@ -154,7 +155,10 @@ require 'menu.php';
 </style>
 
 <script>
-
+$('#exampleModal').on('hide.bs.modal', function () {
+  console.log("asd");
+  ("#resp").val("");
+});
  function modal(idpergunta){
 
  
@@ -174,7 +178,9 @@ require 'menu.php';
   $("#idpergunta").empty();
   $("#titl").append(dados.apelido);
   $("#idpergunta").val(dados.id);
-  $("#mens").append(dados.mensagem);
+  $("#mens").val(dados.mensagem);
+  $("#mens").text(dados.mensagem);
+  
   
 
 });
@@ -182,27 +188,38 @@ require 'menu.php';
   
 
  }
+
+ 
 function responder(){
 
   var idpe = $("#idpergunta").val();
   
   var resposta = $("#resp").val();
+  var mensagem = $("#mens").val();
   
 
 
  $.ajax({
   type: "POST",
   url: "modalresponder.php",
-  data: {'idpergunta':idpe , 'resposta':resposta}
+  data: {'idpergunta':idpe , 'resposta':resposta,'pergunta':mensagem},
+  
+  beforeSend: function(){
+    $("#fecharmodal").click();
+  }
+ 
+}).done(function(){
+    
+
+    $("#" +idpe).parent().remove();
+    $("#resp").val("");
   
   
   
-}).done(function(data){
-  Location.reload();
-  console.log(data);
-})
   
-}
+
+  
+})}
 
 
 </script>

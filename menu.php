@@ -39,7 +39,7 @@ echo '  <a href="pergunta.php" class="nav-item nav-link active">Perguntas</a>';
                 <a href="#" class="nav-item nav-link disabled" tabindex="-1">Notificações</a>
             </div>
             <div class="navbar-nav ml-auto">
-                <a href="#" class="nav-item nav-link">Sair</a>
+                <a href="logoff.php" class="nav-item nav-link">Sair</a>
             </div>
         </div>
     </nav>
