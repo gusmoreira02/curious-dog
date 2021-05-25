@@ -47,12 +47,12 @@ require 'menu.php';
   ?>
 
   </div>
-      <button onclick='modal(<?php echo $linha->idpergunta ?>)' type="button" class="fas fa-reply botao " data-toggle="modal" data-target="#exampleModal" id="<?php echo $linha->idpergunta ?>" ></button>
+      <button onclick='modal(<?php echo $linha->idpergunta ?>)' type="button" class="fas fa-paper-plane fa-lg botao " data-toggle="modal" data-target="#exampleModal" id="<?php echo $linha->idpergunta ?>" ></button>
       
 
 
     </div>
-    <br>
+    
     <?php
   }
 
@@ -107,7 +107,7 @@ require 'menu.php';
         width: 100%;
         background-color: #141211;
         border-left: 3px solid white;
-        margin-top: 2%;
+        margin-top: 5%;
 
 
 
@@ -135,16 +135,31 @@ require 'menu.php';
         border-bottom: 0.8px solid white;
         font-size: clamp(1em, 1em + 1vw, 1.5em);
         word-wrap: break-word;
+        
 
       }
-      .botao , .botao:hover{
+      .botao{
         text-decoration:none;
-       margin-top: 1%;
-       margin-right: 2%;
+       
+       
        background-color:transparent;
        border:none;
        color:white;
-       float:right;
+float:right;
+margin-right:1%;
+margin-top:2%;
+   
+
+
+      }
+      .botao:hover{
+        text-decoration:none;
+       
+       
+       background-color:transparent;
+       border:none;
+       color:#339af0;
+float:right;
 
 
       }
@@ -152,13 +167,15 @@ require 'menu.php';
         width: 100%;
 
       }
+      #mens{
+        word-break:break-word;
+      }
 </style>
 
 <script>
-$('#exampleModal').on('hide.bs.modal', function () {
-  console.log("asd");
-  ("#resp").val("");
-});
+$(document).on('show.bs.modal','#exampleModal', function () {
+  alert('hi');
+})
  function modal(idpergunta){
 
  
@@ -172,6 +189,7 @@ $('#exampleModal').on('hide.bs.modal', function () {
   
 }).done(function(data){
   
+  
   var dados = JSON.parse(data);
   $("#titl").empty();
   $("#mens").empty();
@@ -180,12 +198,14 @@ $('#exampleModal').on('hide.bs.modal', function () {
   $("#idpergunta").val(dados.id);
   $("#mens").val(dados.mensagem);
   $("#mens").text(dados.mensagem);
+  $("#resp").val("");
+  $("#post").prop('checked',false);
   
   
 
 });
   
-  
+
 
  }
 
@@ -196,23 +216,26 @@ function responder(){
   
   var resposta = $("#resp").val();
   var mensagem = $("#mens").val();
-  
-
+  var post =$("#post").is(':checked');
+console.log(post);
 
  $.ajax({
   type: "POST",
   url: "modalresponder.php",
-  data: {'idpergunta':idpe , 'resposta':resposta,'pergunta':mensagem},
+  data: {'idpergunta':idpe , 'resposta':resposta,'pergunta':mensagem,'post':post},
   
   beforeSend: function(){
     $("#fecharmodal").click();
+    $("#"+idpe).parent().remove();
+    $("#post").prop('checked',false);
+    $("#resp").val("");
   }
  
 }).done(function(){
+  
     
 
-    $("#" +idpe).parent().remove();
-    $("#resp").val("");
+   ;
   
   
   
