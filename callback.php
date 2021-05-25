@@ -4,6 +4,7 @@ session_start();
 require 'config.php';
 require 'Twitter-API-Login-PHP-master/autoload.php';
 use Abraham\TwitterOAuth\TwitterOAuth;
+
 if(isset($_SESSION['oauth_token']) && isset($_SESSION['oauth_token_secret'])){
 $request_token = [];
 $request_token['oauth_token'] = $_SESSION['oauth_token'];
@@ -67,6 +68,7 @@ $user = $connection->get('account/verify_credentials', ['tweet_mode' => 'extende
             $executa2->BindParam(":token_secret",  $_SESSION['access_token']['oauth_token_secret']);
 			$executa2->execute();
 			if($executa2){
+				$_SESSION['idUsuario']=$db->lastInsertId();
                 setcookie("oauth_token",$access_token['oauth_token']);
 				header("Location: perfil.php?" . $_SESSION['usuario']);
 
