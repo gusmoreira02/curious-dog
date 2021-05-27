@@ -15,7 +15,7 @@ if(isset($_COOKIE['oauth_token'])){
 	$_SESSION['foto'] = $linha->fotoPerfil;
 	$_SESSION['idUsuario'] = $linha->idusuario;
 	$_SESSION['senha'] = $linha->senha;
-	echo "ja tem";
+	
 	header("Location: home.php");
 }else{
 	

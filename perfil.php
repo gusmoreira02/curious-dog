@@ -75,7 +75,7 @@ require 'cssheader.php';
 </div>
 
 <div class="info">
-<a href="#" class="segd"><span id="seguindo"> <?php echo $seguindo ?></span> seguidores</a>
+<a href="#" data-toggle="modal" data-target="#exampleModal" onclick="ModalSeguidores(<?php echo $pegarperfil->idusuario ?>)" class="segd"><span id="seguindo"> <?php echo $seguindo ?></span> seguidores</a>
 <a href="#" class="segn"><span id="seguidor"><?php echo $seguidores ?></span> seguindo</a>
 
 
@@ -108,7 +108,28 @@ if ($pegarperfil!=false && $_SESSION['idUsuario']== $pegarperfil->idusuario){
 
 <?php } ?>
 
+<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Seguidores</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <div id="ModalSeguidores">
 
+
+        </div>
+      </div>
+      <div class="modal-footer">
+  
+        <button type="button" id="fecharmodal" class="btn btn-secondary" data-dismiss="modal">Fechar</button>
+      </div>
+    </div>
+  </div>
+</div>
 </body>
 </html>
 <style type="text/css">
@@ -223,4 +244,23 @@ function deseguir(usuario, follow) {
   }
 });
 }
+function ModalSeguidores(usuario){
+    $.ajax({
+  url: "seguidores.php",
+  type: "POST",
+  data:{'usuario' :usuario}
+}).done(function(data) {
+ var dados = JSON.parse(data);
+    for(var d in dados){   
+                $("#ModalSeguidores").append('<a href="perfil.php?' + d.usuario +'">'+ d.apelido + '</a>');
+        console.log(d[1]);
+
+    
+}
+
+
+  
+})
+}
+
 </script>
