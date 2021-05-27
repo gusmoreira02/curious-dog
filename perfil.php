@@ -26,7 +26,7 @@ if($pegarperfil->rowCount()==1){
 
 }else{
 
-//header("Location: perfilnotfound.php");
+header("Location: perfilnotfound.php");
 
 }
 }else{
@@ -75,12 +75,12 @@ require 'cssheader.php';
 </div>
 
 <div class="info">
-<a href="#" class="segd"><?php echo $seguidores ?> seguidores</a>
-<a href="#" class="segn"><?php echo $seguindo ?> seguindo</a>
+<a href="#" class="segd"><span id="seguindo"> <?php echo $seguindo ?></span> seguidores</a>
+<a href="#" class="segn"><span id="seguidor"><?php echo $seguidores ?></span> seguindo</a>
 
 
 
-
+<div id="botao">
 
 <?php
 
@@ -90,16 +90,16 @@ if ($pegarperfil!=false && $_SESSION['idUsuario']== $pegarperfil->idusuario){
     
 }else if($sigo->segue ==0){
   
-    echo '<a href="#" class="btn btn-default">Seguir</a>';
+    echo '<a href="#" id="seguir" class="btn btn-outline-primary" onclick="seguir(' . $_SESSION['idUsuario']  . ',' . $pegarperfil->idusuario . ')">Seguir</a>';
 }else if($sigo->segue==1){
   
-    echo '<a href="#" class="btn btn-danger">Deixar de Seguir</a>';
+    echo '<a href="#" id="deseguir" class="btn btn-outline-danger" onclick="deseguir(' . $_SESSION['idUsuario']  . ',' . $pegarperfil->idusuario . ')">Deixar de Seguir</a>';
     
    
 }
 
 ?>
-
+</div>
 </div>
 
 
@@ -186,4 +186,41 @@ body{
 .btn{
   text-align:center;
 }
+#botao{
+
+
+}
 </style>
+<script>
+function seguir(usuario, follow) {
+  $.ajax({
+  url: "seguir.php",
+  type: "POST",
+  data:{'usuario' :usuario, 'follow':follow}
+}).done(function(data) {
+  if (data == 'succes'){
+    $("#botao").empty();
+    $("#botao").append('<a href="#" id="deseguir" class="btn btn-outline-danger" onclick="deseguir(' + usuario  + ',' + follow + ')">Deixar de Seguir</a>');
+    var count= $("#seguindo").text();
+    $("#seguindo").text(parseInt(count)+1);
+}
+});
+}
+
+function deseguir(usuario, follow) {
+  $.ajax({
+  url: "deseguir.php",
+  type: "POST",
+  data:{'usuario' :usuario, 'follow':follow}
+}).done(function(data) {
+  if (data == 'succes'){
+     $("#botao").empty();
+    $("#botao").append('<a href="#" id="seguir" class="btn btn-outline-primary" onclick="seguir(' + usuario  + ',' + follow + ')">Seguir</a>');
+     var count= $("#seguindo").text();
+    $("#seguindo").text(parseInt(count)-1);
+
+
+  }
+});
+}
+</script>
