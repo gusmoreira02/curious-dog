@@ -26,7 +26,7 @@ if($pegarperfil->rowCount()==1){
 
 }else{
 
-//header("Location: perfilnotfound.php");
+header("Location: perfilnotfound.php");
 
 }
 }else{

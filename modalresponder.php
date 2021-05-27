@@ -15,7 +15,17 @@ echo $_POST['post'];
     $executa->execute();
     if($executa){
         if($_POST['post']=="true"){        
-$access_token = $_SESSION['access_token'];
+$executa2= $db->prepare("select oauth_token , oauth_token_secret from pergunta inner join usuario on usuario.idUsuario = pergunta.destinatario where idpergunta=:id");
+$executa2->BindParam(":id",$_POST['idpergunta']);
+$executa2->execute();
+if($executa2){
+    $linha=$executa2->fetch(PDO::FETCH_OBJ);
+    $access_token['oauth_token']= $linha->oauth_token;
+    $access_token['oauth_token_secret']= $linha->oauth_token_secret;
+}else{
+    echo "erro";
+}
+
 $connection = new TwitterOAuth(CONSUMER_KEY,CONSUMER_SECRET, $access_token['oauth_token'],$access_token['oauth_token_secret']);
 
 $media_path =   $_POST['pergunta'] ." — " . $_POST['resposta'] . "   ";

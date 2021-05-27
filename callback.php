@@ -33,8 +33,7 @@ $user = $connection->get('account/verify_credentials', ['tweet_mode' => 'extende
 	$_SESSION['senha'] = $array['id'];
 	$_SESSION['usuario'] = $array['screen_name'];
 	$_SESSION['apelido'] = $array['name'];
-	$_SESSION['foto'] = $array['profile_image_url'];
-	$varfoto = explode("_normal", $_SESSION['foto']);
+	$varfoto = explode("_normal", $array['profile_image_url']);
 	$foto = $varfoto[0] . $varfoto[1];
 	$_SESSION['foto'] = $foto;
 	
@@ -42,32 +41,23 @@ $user = $connection->get('account/verify_credentials', ['tweet_mode' => 'extende
 
 	require 'conexao.php';
 
-	$executa=$db->prepare("select idusuario, usuario,senha, apelido, fotoPerfil from usuario where senha=:senha");
-	$executa->BindParam(":senha",$_SESSION['senha']);
-	$executa->execute();
 
 
-	if($executa){
-		if($executa->rowCount()==1){
-			$linha=$executa->fetch(PDO::FETCH_OBJ);
-			$_SESSION['usuario'] = $linha->usuario;
-			$_SESSION['apelido'] = $linha->apelido;
-			$_SESSION['foto'] = $linha->fotoPerfil;
-			$_SESSION['idUsuario'] = $linha->idusuario;
-		header("Location: perfil.php");
 
 
-		}else{
+
+
 			$executa2=$db->prepare("INSERT into usuario(usuario,senha,apelido,fotoPerfil,oauth_token,oauth_token_secret) values(:usuario,:senha,:apelido,:fotoPerfil,:token,:token_secret)");
 			$executa2->BindParam(":usuario", $_SESSION['usuario']);
 			$executa2->BindParam(":senha", $_SESSION['senha']);
 			$executa2->BindParam(":apelido", $_SESSION['apelido']);
 			$executa2->BindParam(":fotoPerfil", $_SESSION['foto']);
-            echo $_SESSION['access_token']['oauth_token'];
+            
             $executa2->BindParam(":token", $_SESSION['access_token']['oauth_token']);
             $executa2->BindParam(":token_secret",  $_SESSION['access_token']['oauth_token_secret']);
 			$executa2->execute();
 			if($executa2){
+				unset($_SESSION['oaut_token_secret']);
 				$_SESSION['idUsuario']=$db->lastInsertId();
                 setcookie("oauth_token",$access_token['oauth_token']);
 				header("Location: perfil.php?" . $_SESSION['usuario']);
@@ -75,9 +65,9 @@ $user = $connection->get('account/verify_credentials', ['tweet_mode' => 'extende
 			}
 
 
-		}
+		
 
-	}
+	
 }
 }else{
     echo "erro";

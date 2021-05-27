@@ -173,9 +173,7 @@ float:right;
 </style>
 
 <script>
-$(document).on('show.bs.modal','#exampleModal', function () {
-  alert('hi');
-})
+
  function modal(idpergunta){
 
  
@@ -231,21 +229,15 @@ console.log(post);
     $("#resp").val("");
   }
  
-}).done(function(){
-  
-    
-
-   ;
-  
 }).done(function(data){
   document.location.reload();
   console.log(data);
-})
+});
   
   
 
   
-})}
+}
 
 
 </script>
