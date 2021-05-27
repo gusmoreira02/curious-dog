@@ -68,38 +68,42 @@ require 'cssheader.php';
 
 
 <div class="perfil">
+
+
+
 <div class="nome">
-
-<img class="imgperfil" src="<?php echo $pegarperfil->fotoPerfil; ?>" ><span class="usuario"><?php echo $pegarperfil->apelido; ?></span>
-
+<img class="imgperfil" src="<?php echo $pegarperfil->fotoPerfil; ?>" >
+<br>
+<span class="usuario"><?php echo $pegarperfil->apelido; ?></span>
 </div>
-
-<div class="info">
-<a href="#" data-toggle="modal" data-target="#exampleModal" onclick="ModalSeguidores(<?php echo $pegarperfil->idusuario ?>)" class="segd"><span id="seguindo"> <?php echo $seguindo ?></span> seguidores</a>
-<a href="#" class="segn"><span id="seguidor"><?php echo $seguidores ?></span> seguindo</a>
-
-
-
 <div id="botao">
 
-<?php
-
-if ($pegarperfil!=false && $_SESSION['idUsuario']== $pegarperfil->idusuario){
+<?php if ($pegarperfil!=false && $_SESSION['idUsuario']== $pegarperfil->idusuario){
     ?> <a href="editarperfil.php?id=<?php echo $_SESSION['idUsuario']; ?>" class="btn btn-light">Editar</a><?php
     
     
 }else if($sigo->segue ==0){
   
-    echo '<a href="#" id="seguir" class="btn btn-outline-primary" onclick="seguir(' . $_SESSION['idUsuario']  . ',' . $pegarperfil->idusuario . ')">Seguir</a>';
+    echo '<button href="" id="seguir" class="btn btn-outline-primary segbutton" onclick="seguir(' . $_SESSION['idUsuario']  . ',' . $pegarperfil->idusuario . ')">Seguir</button>';
 }else if($sigo->segue==1){
   
-    echo '<a href="#" id="deseguir" class="btn btn-outline-danger" onclick="deseguir(' . $_SESSION['idUsuario']  . ',' . $pegarperfil->idusuario . ')">Deixar de Seguir</a>';
+    echo '<button href="" id="deseguir" class="btn btn-outline-danger segbutton" onclick="deseguir(' . $_SESSION['idUsuario']  . ',' . $pegarperfil->idusuario . ')">Deixar de Seguir</button>';
     
    
-}
-
-?>
+} ?>
 </div>
+
+
+<div class="info">
+<a  data-toggle="modal" data-target="#exampleModal" onclick="ModalSeguidores(<?php echo $pegarperfil->idusuario ?>)" class="segd btn btn-link"><span id="seguindo"> <?php echo $seguindo ?></span> Seguidores</a>
+<a  class="segn btn btn-link"data-toggle="modal" data-target="#exampleModal" onclick="ModalSeguindo(<?php echo $pegarperfil->idusuario ?>)"><span id="seguidor"><?php echo $seguidores ?></span> Seguindo</a>
+
+
+
+
+
+
+
 </div>
 
 
@@ -130,9 +134,40 @@ if ($pegarperfil!=false && $_SESSION['idUsuario']== $pegarperfil->idusuario){
     </div>
   </div>
 </div>
+<?php 
+
+
+if($_SESSION['idUsuario']!== $pegarperfil->idusuario){
+
+?>
+<div id="perg">
+<hr id="linha">
+
+<!-- <input type="text" id="pergunta" class="text_font_resize" maxlength="100" placeholder="Faça uma pergunta"> -->
+<textarea  id="pergunta" maxlength="100" placeholder="Faça uma pergunta"></textarea>
+<br>
+<div class="form-check form-switch">
+  <input class="form-check-input" type="checkbox" id="anom">
+  <label class="form-check-label" for="flexSwitchCheckDefault"> Anônimo</label>
+</div>
+<button class="btn btn-outline-primary pb" onclick="perguntar(<?php echo $pegarperfil->idusuario ?>)"> Perguntar </button>
+
+</div>
+
+
+<hr id="linha">
+<?php }   ?>
 </body>
 </html>
 <style type="text/css">
+#linha {
+  width:70%;
+  margin-left:15%;
+  color:white;
+}
+.form-check-label{
+  color:white;
+}
 .button{
     width:30%;
     
@@ -143,18 +178,29 @@ if ($pegarperfil!=false && $_SESSION['idUsuario']== $pegarperfil->idusuario){
 
 
 
-.segd:hover , .segn:hover{
+.segd:hover , .segn:hover {
     text-decoration:none;
 }
+.fotoperfil{
 
-.nome img{
-    border-radius: 50%;
-
+  
+}
+.imgperfil{
+  
+  
+    border-radius: 100%;
+    width:15vw;
+  height:15vw;
     
 }
 .nome{
-    width: 35%;
-    float:left;
+    
+    text-align:center;
+    color:white;
+    
+    
+    
+    
 }
 
 body{
@@ -162,54 +208,95 @@ body{
   background-color:#141211;
 }
 .perfil{
-  
-    
     
     width:70vw;
-    margin-left:15%;
-    background-color:white;
+    margin-left:15vw;
+    background-color:#141211;
 
-    height:10vw;
+    
     
     
     
 
 }
+.pb{
+  margin-top:1%;
+  font-size: clamp(0.5em, 1em + 1vw, 1em);
+}
+#perg{
+  margin-top:2%;
+  
+  
+
+text-align:center;
+
+}
+#pergunta{
+  width:50%;
+  text-align:center;
+  
+  
+  font-size: clamp(0.5em, 1em + 1vw, 1em);
+  border-radius:10px;
+  resize:none;
+  
+  
+
+}
+#pergunta:focus{
+  outline:none;
+}
 .segn, .segd{
-    
-    margin-right:1%;
+  text-decoration:none;
+  
+  font-size: clamp(1em, 1em + 1vw, 2em);
     
 
 }
 .usuario{
-    font-size: clamp(1.5em, 1em + 1vw, 2em);
-    margin-left: 1%;
+    font-size: clamp(0.5em, 1em + 1vw, 2em);
+    
+    
+    
 
 }
 
 .info{
   
-  float:right;
-  width:40%;
-  margin-right:2vw;
-  padding-top:4vw;
   
-  
-  font-size: clamp(0.5em, 1em + 1vw, 1em);
-  
-  
-  
-}
-.imgperfil{
-  width:10vw;
-  height:10vw;
-}
-.btn{
   text-align:center;
+  
+  
+  
+  
+  font-size: clamp(0.5em, 0.5em + 0.5vw, 0.5em);
+  
+  
+  
+}
+
+.btn{
+  
 }
 #botao{
+text-align:center;
 
 
+}
+
+.segbutton{
+  font-size: clamp(1em, 0.5em + 0.5vw, 1em);
+}
+.dispseg{
+margin-bottom:2%;
+}
+.dispseg img{
+  border-radius:50%;
+  width:10%;
+  height:10%;
+}
+.dispn{
+  margin-left:1%;
 }
 </style>
 <script>
@@ -220,8 +307,8 @@ function seguir(usuario, follow) {
   data:{'usuario' :usuario, 'follow':follow}
 }).done(function(data) {
   if (data == 'succes'){
-    $("#botao").empty();
-    $("#botao").append('<a href="#" id="deseguir" class="btn btn-outline-danger" onclick="deseguir(' + usuario  + ',' + follow + ')">Deixar de Seguir</a>');
+    $("#seguir").remove();
+    $("#botao").append('<button href="" id="deseguir" class="btn btn-outline-danger segbutton" onclick="deseguir(' + usuario  + ',' + follow + ')">Deixar de Seguir</button>');
     var count= $("#seguindo").text();
     $("#seguindo").text(parseInt(count)+1);
 }
@@ -235,8 +322,8 @@ function deseguir(usuario, follow) {
   data:{'usuario' :usuario, 'follow':follow}
 }).done(function(data) {
   if (data == 'succes'){
-     $("#botao").empty();
-    $("#botao").append('<a href="#" id="seguir" class="btn btn-outline-primary" onclick="seguir(' + usuario  + ',' + follow + ')">Seguir</a>');
+     $("#deseguir").remove();
+    $("#botao").append('<button href="" id="seguir" class="btn btn-outline-primary segbutton" onclick="seguir(' + usuario  + ',' + follow + ')">Seguir</button>');
      var count= $("#seguindo").text();
     $("#seguindo").text(parseInt(count)-1);
 
@@ -250,10 +337,13 @@ function ModalSeguidores(usuario){
   type: "POST",
   data:{'usuario' :usuario}
 }).done(function(data) {
+  $("#exampleModalLabel").text("Seguidores");
  var dados = JSON.parse(data);
-    for(var d in dados){   
-                $("#ModalSeguidores").append('<a href="perfil.php?' + d.usuario +'">'+ d.apelido + '</a>');
-        console.log(d[1]);
+ $("#ModalSeguidores").empty();
+    for(let [index,d] of dados.entries()){   
+      
+                $("#ModalSeguidores").append('<div class="dispseg"><a href="perfil.php?' + d.usuario +'"><img src="'+ d.foto+'"><span class="dispn">'+ d.apelido + '</span></a></div>');
+        console.log(d);
 
     
 }
@@ -261,6 +351,44 @@ function ModalSeguidores(usuario){
 
   
 })
+}
+function ModalSeguindo(usuario){
+    $.ajax({
+  url: "seguindo.php",
+  type: "POST",
+  data:{'usuario' :usuario}
+}).done(function(data) {
+  $("#exampleModalLabel").text("Seguindo");
+ var dados = JSON.parse(data);
+ $("#ModalSeguidores").empty();
+    for(let [index,d] of dados.entries()){   
+      
+                $("#ModalSeguidores").append('<div class="dispseg"><a href="perfil.php?' + d.usuario +'"><img src="'+ d.foto+'"><span class="dispn">'+ d.apelido + '</span></a></div>');
+        console.log(d);
+
+    
+}
+
+
+  
+})
+}
+function perguntar(usuario){
+  var mensagem = $("#pergunta").val();
+  var anom = $("#anom").val();
+  $.ajax({
+  url: "perguntar.php",
+  type: "POST",
+  data:{'usuario' :usuario,"mensagem":mensagem,"anom":anom}
+}).done(function(data) {
+  
+    
+
+
+
+  
+})
+
 }
 
 </script>

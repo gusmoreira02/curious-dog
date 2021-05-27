@@ -23,7 +23,7 @@ require 'menu.php';
 <div class="container">
 <?php
   include("conexao.php");
-  $executa=$db->prepare("select idpergunta, mensagem, usuario, fotoPerfil, apelido, dataPergunta from pergunta as p inner join usuario as u on p.remetente = u.idusuario left join resposta r on p.idpergunta=r.pergunta where p.destinatario=:id and r.pergunta is null;");
+  $executa=$db->prepare("select anonimo,idpergunta, mensagem, usuario, fotoPerfil, apelido, dataPergunta from pergunta as p inner join usuario as u on p.remetente = u.idusuario left join resposta r on p.idpergunta=r.pergunta where p.destinatario=:id and r.pergunta is null;");
   $executa->BindParam(":id",$_SESSION['idUsuario']);
   $executa->execute();
 
@@ -31,9 +31,13 @@ require 'menu.php';
     ?>
     <div class="mensagem">
       <div class="remetente"> 
-          <a class="usuario" href="perfil.php?<?php echo $linha->usuario; ?>"> <img src="<?php echo $linha->fotoPerfil ?>"  width="50px" height="50px"><b> <?php echo $linha->apelido ?></b></a>
+      <?php  if($linha->anonimo==1){ ?>
+          <a class="usuario" > <img src="pic/biscouito.png"  width="50px" height="50px"><b> Bixcônimo</b></a>
+<?php }else{ ?>
 
+  <a class="usuario" href="perfil.php?<?php echo $linha->usuario; ?>"> <img src="<?php echo $linha->fotoPerfil ?>"  width="50px" height="50px"><b> <?php echo $linha->apelido ?></b></a>
 
+<?php  }?>
         <div class="data">
           <?php
           echo $linha->dataPergunta;
@@ -192,7 +196,11 @@ float:right;
   $("#titl").empty();
   $("#mens").empty();
   $("#idpergunta").empty();
-  $("#titl").append(dados.apelido);
+  if(dados.anonimo==1){
+    $("#titl").append("Bixcônimo");
+  }else{
+    $("#titl").append(dados.apelido);
+  }
   $("#idpergunta").val(dados.id);
   $("#mens").val(dados.mensagem);
   $("#mens").text(dados.mensagem);

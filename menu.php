@@ -6,6 +6,7 @@ $url=$_SERVER["REQUEST_URI"];
   <div class="header">
   <div>
   <img id="logo" src="pic/logo4.png"  alt="Logo Thing main logo">
+ 
 </div>
 </div>
 
@@ -33,11 +34,16 @@ echo '  <a href="pergunta.php" class="nav-item nav-link active">Perguntas</a>';
 
             
             ?>
-                
               
-                <a href="#" class="nav-item nav-link">Procurar</a>
-                <a href="#" class="nav-item nav-link disabled" tabindex="-1">Notificações</a>
+ 
+
+
+        
+    
+                <a href="#" class="nav-item nav-link disabled" tabindex="-1">Notificações<span class="badge badge-dark">4</span></a>
             </div>
+            
+            
             <div class="navbar-nav ml-auto">
                 <a href="logoff.php" class="nav-item nav-link">Sair</a>
             </div>
@@ -66,5 +72,29 @@ echo '  <a href="pergunta.php" class="nav-item nav-link active">Perguntas</a>';
    
 
   }
+  .select2-container--default .select2-selection--single .select2-selection__rendered{
+    background-color:#212529;
+    border:none;
+    outline: 0; 
+    color:white;
+    border-bottom:1px solid white;
+    
+  }
+  #search {
+    
+    
+    
+    
+    box-shadow: 0 0 0 0;
+    
+    
+  }
+.badge{
+  background-color:transparent;
+}
 
 </style>
+<script>
+
+
+</script>

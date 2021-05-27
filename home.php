@@ -164,6 +164,6 @@ require 'menu.php';
  
 </style>
 
-}
+
 
 </style>
