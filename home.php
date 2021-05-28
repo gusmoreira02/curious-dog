@@ -8,6 +8,7 @@
   ?>
 </head>
 <body>
+<img src="pic/logo4.png" id="logo">
 <?php
 
 require 'seguranca.php';
@@ -103,6 +104,14 @@ require 'menu.php';
 
 
       }
+      #logo{
+      
+      text-align: center;
+      width: 26%;
+      margin-left: 37%;
+  
+  
+    }
       .data{
         color: white;
         float: right;

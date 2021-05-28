@@ -3,12 +3,10 @@
 $url=$_SERVER["REQUEST_URI"];
 
 ?>
-  <div class="header">
-  <div>
+  
   
  
-</div>
-</div>
+
 
 <div class="bs-example">
     <nav class="navbar navbar-expand-md navbar-dark bg-dark fixed-bottom">

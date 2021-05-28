@@ -70,7 +70,7 @@ require 'cssheader.php';
 <div class="perfil">
 
 <div class="capa">
-<img src="https://pbs.twimg.com/profile_banners/963835635147726851/1527648615/600x200" alt="">
+<img src="<?php echo $_SESSION['banner']; ?>" alt="">
 
 </div>
 
@@ -192,6 +192,7 @@ background-repeat:no;
   
 }
 .capa img{
+  width:100%;
   height:23vw;
 }
 .imgperfil{
@@ -218,9 +219,14 @@ body{
 }
 .perfil{
     
+    border-left:0.5px solid white;
+    border-right:0.5px solid white;
+    
     width:70vw;
     margin-left:15vw;
     background-color:#141211;
+    height:60vw;
+    
 
     
     

@@ -13,14 +13,18 @@
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 </head>
 <body>
+
+<img src="pic/logo4.png" id="logo">
   <?php
   
 require 'seguranca.php';
 require 'menu.php';
 ?>
 
-
 <div class="container">
+
+  
+
 <?php
   include("conexao.php");
   $executa=$db->prepare("select anonimo,idpergunta, mensagem, usuario, fotoPerfil, apelido, dataPergunta from pergunta as p inner join usuario as u on p.remetente = u.idusuario left join resposta r on p.idpergunta=r.pergunta where p.destinatario=:id and r.pergunta is null;");
@@ -62,6 +66,7 @@ require 'menu.php';
 
 ?>
 </div>
+
 <!-- Modal -->
 <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
   <div class="modal-dialog">
@@ -94,6 +99,15 @@ require 'menu.php';
 </body>
 </html>
 <style type="text/css">
+
+ #logo{
+      
+      text-align: center;
+      width: 26%;
+      margin-left: 37%;
+  
+  
+    }
 
       .usuario, .usuario:hover{
         text-decoration: none;
@@ -169,11 +183,19 @@ float:right;
       }
       textarea{
         width: 100%;
+        
 
       }
       #mens{
         word-break:break-word;
       }
+      .ball {
+  position: absolute;
+  border-radius: 100%;
+  opacity: 0.7;
+  z-index:-1;
+}
+    
 </style>
 
 <script>
@@ -246,6 +268,48 @@ console.log(post);
 
   
 }
+const colors = ["#722d0534", "#722d0534", "#722d0534", "#722d0534", "#722d0534"];
+
+const numBalls = 100;
+const balls = [];
+
+for (let i = 0; i < numBalls; i++) {
+  let ball = document.createElement("div");
+  ball.classList.add("ball");
+  ball.style.background = colors[Math.floor(Math.random() * colors.length)];
+  ball.style.left = `${Math.floor(Math.random() * 100)}vw`;
+  ball.style.top = `${Math.floor(Math.random() * 100)}vh`;
+  ball.style.transform = `scale(${Math.random()})`;
+  ball.style.width = `${Math.random()}em`;
+  ball.style.height = ball.style.width;
+  
+  balls.push(ball);
+  document.body.append(ball);
+}
+
+// Keyframes
+balls.forEach((el, i, ra) => {
+  let to = {
+    x: Math.random() * (i % 2 === 0 ? -11 : 11),
+    y: Math.random() * 12
+  };
+
+  let anim = el.animate(
+    [
+      { transform: "translate(0, 0)" },
+      { transform: `translate(${to.x}rem, ${to.y}rem)` }
+    ],
+    {
+      
+      duration: (Math.random() + 1) * 2000, // random duration
+      direction: "alternate",
+      fill: "both",
+      iterations: Infinity,
+      
+      easing: "ease-in-out"
+    }
+  );
+});
 
 
 </script>
