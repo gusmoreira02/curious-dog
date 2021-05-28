@@ -24,18 +24,40 @@ $access_token = $twitter->oauth("oauth/access_token", ["oauth_verifier" => $_REQ
 $_SESSION['access_token'] = $access_token;
 
 $connection = new TwitterOAuth(CONSUMER_KEY,CONSUMER_SECRET, $access_token['oauth_token'], $access_token['oauth_token_secret']);
-echo $access_token['oauth_token_secret'];
+echo $access_token['oauth_token'];
 $user = $connection->get('account/verify_credentials', ['tweet_mode' => 'extended', 'include_entities' => 'true']);
 	//$content = $twitter->get("account/verify_credentials");
 	$array = json_decode(json_encode($user), true);
-	
-    
+	require 'conexao.php';
+	$executa=$db->prepare("select usuario,apelido,fotoPerfil,idusuario,senha,banner from usuario where oauth_token=:o");
+	$executa->BindParam(":o",$_COOKIE['oauth_token']);
+	$executa->execute();
+	$linha = $executa->fetch(PDO::FETCH_OBJ);
+		if(isset($linha->idusuario)){
+	$_SESSION['usuario'] = $linha->usuario;
+	$_SESSION['apelido'] = $linha->apelido;
+	$_SESSION['foto'] = $linha->fotoPerfil;
+	$_SESSION['idUsuario'] = $linha->idusuario;
+	$_SESSION['senha'] = $linha->senha;
+	$_SESSION['banner'] = $linha->banner;
+	$executa3=$db->prepare("UPDATE usuario SET usuario=:usuario, apelido=:apelido, fotoPerfil=:fotoPerfil, banner=:banner where idusuario=:id ");
+	$executa3->BindParam(":id", $linha->idusuario);
+	$executa3->BindParam(":usuario", $array['screen_name']);
+	$executa3->BindParam(":apelido", $array['name']);
+	$varfoto = explode("_normal", $array['profile_image_url']);
+	$foto = $varfoto[0] . $varfoto[1];
+	$executa3->BindParam(":fotoPerfil", $foto);
+	$executa3->BindParam(":banner", $array['profile_banner_url']);
+	$executa3->execute();
+	header("location: home.php");
+    }else{
 	$_SESSION['senha'] = $array['id'];
 	$_SESSION['usuario'] = $array['screen_name'];
 	$_SESSION['apelido'] = $array['name'];
 	$varfoto = explode("_normal", $array['profile_image_url']);
 	$foto = $varfoto[0] . $varfoto[1];
 	$_SESSION['foto'] = $foto;
+	$_SESSION['banner'] = $array['profile_banner_url'];
 	
 	
 
@@ -67,7 +89,7 @@ $user = $connection->get('account/verify_credentials', ['tweet_mode' => 'extende
 
 		
 
-	
+	}
 }
 }else{
     echo "erro";
