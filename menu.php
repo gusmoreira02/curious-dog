@@ -5,7 +5,7 @@ $url=$_SERVER["REQUEST_URI"];
 ?>
   <div class="header">
   <div>
-  <img id="logo" src="pic/logo4.png"  alt="Logo Thing main logo">
+  
  
 </div>
 </div>

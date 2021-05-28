@@ -69,7 +69,10 @@ require 'cssheader.php';
 
 <div class="perfil">
 
+<div class="capa">
+<img src="https://pbs.twimg.com/profile_banners/963835635147726851/1527648615/600x200" alt="">
 
+</div>
 
 <div class="nome">
 <img class="imgperfil" src="<?php echo $pegarperfil->fotoPerfil; ?>" >
@@ -108,7 +111,7 @@ require 'cssheader.php';
 
 
 
-</div>
+
 
 <?php } ?>
 
@@ -181,13 +184,19 @@ if($_SESSION['idUsuario']!== $pegarperfil->idusuario){
 .segd:hover , .segn:hover {
     text-decoration:none;
 }
-.fotoperfil{
+.capa{
 
+
+height:15vw;
+background-repeat:no;
   
+}
+.capa img{
+  height:23vw;
 }
 .imgperfil{
   
-  
+  border:3px solid black;
     border-radius: 100%;
     width:15vw;
   height:15vw;
