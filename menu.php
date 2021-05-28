@@ -41,13 +41,15 @@ echo '  <a href="pergunta.php" class="nav-item nav-link active">Perguntas</a>';
         
     
                 <a href="#" class="nav-item nav-link disabled" tabindex="-1">Notificações<span class="badge badge-dark">4</span></a>
+                
             </div>
-            
-            
+
             <div class="navbar-nav ml-auto">
                 <a href="logoff.php" class="nav-item nav-link">Sair</a>
             </div>
+
         </div>
+
     </nav>
 </div>
 
@@ -91,6 +93,15 @@ echo '  <a href="pergunta.php" class="nav-item nav-link active">Perguntas</a>';
   }
 .badge{
   background-color:transparent;
+}
+.logo{
+    position: absolute;
+    width: 10vw;
+    height: 4vw;
+    margin-left: 43%;
+
+
+
 }
 
 </style>
