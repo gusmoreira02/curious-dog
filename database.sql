@@ -1,5 +1,3 @@
-CREATE DATABASE  IF NOT EXISTS `database` /*!40100 DEFAULT CHARACTER SET utf8mb4 */;
-USE `database`;
 -- MySQL dump 10.13  Distrib 8.0.22, for Win64 (x86_64)
 --
 -- Host: 127.0.0.1    Database: database
@@ -85,10 +83,9 @@ DROP TABLE IF EXISTS `respostacurtida`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `respostacurtida` (
-  `idrespostaCurtida` int(11) NOT NULL AUTO_INCREMENT,
   `resposta` int(11) NOT NULL,
   `usuario` int(11) NOT NULL,
-  PRIMARY KEY (`idrespostaCurtida`),
+  PRIMARY KEY (`resposta`,`usuario`),
   KEY `usuario` (`usuario`),
   KEY `respostacurtida_ibfk_2_idx` (`resposta`),
   CONSTRAINT `respostacurtida_ibfk_1` FOREIGN KEY (`usuario`) REFERENCES `usuario` (`idusuario`),
@@ -102,6 +99,7 @@ CREATE TABLE `respostacurtida` (
 
 LOCK TABLES `respostacurtida` WRITE;
 /*!40000 ALTER TABLE `respostacurtida` DISABLE KEYS */;
+INSERT INTO `respostacurtida` VALUES (79,8),(78,10),(79,10);
 /*!40000 ALTER TABLE `respostacurtida` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -149,8 +147,10 @@ CREATE TABLE `usuario` (
   `fotoPerfil` varchar(5000) DEFAULT NULL,
   `oauth_token` varchar(50) DEFAULT NULL,
   `oauth_token_secret` varchar(50) DEFAULT NULL,
+  `banner` varchar(70) DEFAULT NULL,
+  `bio` varchar(255) DEFAULT NULL,
   PRIMARY KEY (`idusuario`)
-) ENGINE=InnoDB AUTO_INCREMENT=12 DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB AUTO_INCREMENT=18 DEFAULT CHARSET=utf8mb4;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -159,7 +159,7 @@ CREATE TABLE `usuario` (
 
 LOCK TABLES `usuario` WRITE;
 /*!40000 ALTER TABLE `usuario` DISABLE KEYS */;
-INSERT INTO `usuario` VALUES (3,'asd','asd','asd','http://pbs.twimg.com/profile_images/1382075628007067648/9n41ejJx.jpg',NULL,NULL),(4,'Guusmoreira02','963835635147726851','G','http://pbs.twimg.com/profile_images/1384177207409401859/brEuvNJ2_normal.jpg',NULL,NULL),(7,'AdacheskiAndre','1224585458149134337','Andre Adacheski','http://pbs.twimg.com/profile_images/1382075628007067648/9n41ejJx.jpg','1224585458149134337-gtHkqNeq4WFTAIikHM8xpmmDfB42lQ','2n5xCoPmIyFruXsxesVobRfzjXlBXXbCts34sOA6BKLoC'),(8,'leo_sarturi','240383518','leo','http://pbs.twimg.com/profile_images/1358788520282890241/OzUGSByh.jpg','240383518-hrZfh9psnbDUdYVsRQGkoWx5DtrpwZijGILTVtob','c7oSAzxVsRZGC0BsWopH5MBfhy5zO8X2oZMHns36y8g9g'),(10,'testebixcoito','4651815436','Bixcoito','http://pbs.twimg.com/profile_images/1397010479730630659/rdyt4Ijr.jpg','4651815436-EicA7i2y1YY9KOKqsS54IBpCQCobuORNfmGzH2n','RDXGmsO0l5VsimaCR1gRSruRtslTCyJ0YzQosQfcCYLuM');
+INSERT INTO `usuario` VALUES (3,'asd','asd','asd','http://pbs.twimg.com/profile_images/1382075628007067648/9n41ejJx.jpg',NULL,NULL,NULL,NULL),(4,'Guusmoreira02','963835635147726851','G','http://pbs.twimg.com/profile_images/1384177207409401859/brEuvNJ2_normal.jpg',NULL,NULL,NULL,NULL),(7,'AdacheskiAndre','1224585458149134337','Andre Adacheski','http://pbs.twimg.com/profile_images/1382075628007067648/9n41ejJx.jpg','1224585458149134337-gtHkqNeq4WFTAIikHM8xpmmDfB42lQ','2n5xCoPmIyFruXsxesVobRfzjXlBXXbCts34sOA6BKLoC',NULL,NULL),(8,'leo_sarturi','240383518','leo','http://pbs.twimg.com/profile_images/1358788520282890241/OzUGSByh.jpg','240383518-hrZfh9psnbDUdYVsRQGkoWx5DtrpwZijGILTVtob','c7oSAzxVsRZGC0BsWopH5MBfhy5zO8X2oZMHns36y8g9g',NULL,NULL),(10,'testebixcoito','4651815436','Bixcoito','http://pbs.twimg.com/profile_images/1397010479730630659/rdyt4Ijr.jpg','4651815436-EicA7i2y1YY9KOKqsS54IBpCQCobuORNfmGzH2n','RDXGmsO0l5VsimaCR1gRSruRtslTCyJ0YzQosQfcCYLuM','https://pbs.twimg.com/profile_banners/4651815436/1622164693',NULL);
 /*!40000 ALTER TABLE `usuario` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -170,6 +170,82 @@ UNLOCK TABLES;
 --
 -- Dumping routines for database 'database'
 --
+/*!50003 DROP PROCEDURE IF EXISTS `curtidas` */;
+/*!50003 SET @saved_cs_client      = @@character_set_client */ ;
+/*!50003 SET @saved_cs_results     = @@character_set_results */ ;
+/*!50003 SET @saved_col_connection = @@collation_connection */ ;
+/*!50003 SET character_set_client  = utf8mb4 */ ;
+/*!50003 SET character_set_results = utf8mb4 */ ;
+/*!50003 SET collation_connection  = utf8mb4_general_ci */ ;
+/*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
+/*!50003 SET sql_mode              = 'STRICT_TRANS_TABLES,NO_AUTO_CREATE_USER,NO_ENGINE_SUBSTITUTION' */ ;
+DELIMITER ;;
+CREATE DEFINER=`root`@`localhost` PROCEDURE `curtidas`(in idresposta int)
+BEGIN
+select count(usuario) as curtidas from respostacurtida where resposta = idresposta ;
+END ;;
+DELIMITER ;
+/*!50003 SET sql_mode              = @saved_sql_mode */ ;
+/*!50003 SET character_set_client  = @saved_cs_client */ ;
+/*!50003 SET character_set_results = @saved_cs_results */ ;
+/*!50003 SET collation_connection  = @saved_col_connection */ ;
+/*!50003 DROP PROCEDURE IF EXISTS `curtir` */;
+/*!50003 SET @saved_cs_client      = @@character_set_client */ ;
+/*!50003 SET @saved_cs_results     = @@character_set_results */ ;
+/*!50003 SET @saved_col_connection = @@collation_connection */ ;
+/*!50003 SET character_set_client  = utf8mb4 */ ;
+/*!50003 SET character_set_results = utf8mb4 */ ;
+/*!50003 SET collation_connection  = utf8mb4_general_ci */ ;
+/*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
+/*!50003 SET sql_mode              = 'STRICT_TRANS_TABLES,NO_AUTO_CREATE_USER,NO_ENGINE_SUBSTITUTION' */ ;
+DELIMITER ;;
+CREATE DEFINER=`root`@`localhost` PROCEDURE `curtir`(in idresposta int,in idusuario int)
+BEGIN
+insert into respostacurtida(resposta,usuario)values(idresposta,idusuario);
+END ;;
+DELIMITER ;
+/*!50003 SET sql_mode              = @saved_sql_mode */ ;
+/*!50003 SET character_set_client  = @saved_cs_client */ ;
+/*!50003 SET character_set_results = @saved_cs_results */ ;
+/*!50003 SET collation_connection  = @saved_col_connection */ ;
+/*!50003 DROP PROCEDURE IF EXISTS `curto` */;
+/*!50003 SET @saved_cs_client      = @@character_set_client */ ;
+/*!50003 SET @saved_cs_results     = @@character_set_results */ ;
+/*!50003 SET @saved_col_connection = @@collation_connection */ ;
+/*!50003 SET character_set_client  = utf8mb4 */ ;
+/*!50003 SET character_set_results = utf8mb4 */ ;
+/*!50003 SET collation_connection  = utf8mb4_general_ci */ ;
+/*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
+/*!50003 SET sql_mode              = 'STRICT_TRANS_TABLES,NO_AUTO_CREATE_USER,NO_ENGINE_SUBSTITUTION' */ ;
+DELIMITER ;;
+CREATE DEFINER=`root`@`localhost` PROCEDURE `curto`(in idresposta int,in idusuario int)
+BEGIN
+select count(usuario) as curto from respostacurtida where resposta=idresposta && usuario= idusuario;
+END ;;
+DELIMITER ;
+/*!50003 SET sql_mode              = @saved_sql_mode */ ;
+/*!50003 SET character_set_client  = @saved_cs_client */ ;
+/*!50003 SET character_set_results = @saved_cs_results */ ;
+/*!50003 SET collation_connection  = @saved_col_connection */ ;
+/*!50003 DROP PROCEDURE IF EXISTS `descurtir` */;
+/*!50003 SET @saved_cs_client      = @@character_set_client */ ;
+/*!50003 SET @saved_cs_results     = @@character_set_results */ ;
+/*!50003 SET @saved_col_connection = @@collation_connection */ ;
+/*!50003 SET character_set_client  = utf8mb4 */ ;
+/*!50003 SET character_set_results = utf8mb4 */ ;
+/*!50003 SET collation_connection  = utf8mb4_general_ci */ ;
+/*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
+/*!50003 SET sql_mode              = 'STRICT_TRANS_TABLES,NO_AUTO_CREATE_USER,NO_ENGINE_SUBSTITUTION' */ ;
+DELIMITER ;;
+CREATE DEFINER=`root`@`localhost` PROCEDURE `descurtir`(in idresposta int,in idusuario int)
+BEGIN
+delete from respostacurtida where resposta=idresposta && usuario=idusuario;
+END ;;
+DELIMITER ;
+/*!50003 SET sql_mode              = @saved_sql_mode */ ;
+/*!50003 SET character_set_client  = @saved_cs_client */ ;
+/*!50003 SET character_set_results = @saved_cs_results */ ;
+/*!50003 SET collation_connection  = @saved_col_connection */ ;
 /*!50003 DROP PROCEDURE IF EXISTS `seguidores` */;
 /*!50003 SET @saved_cs_client      = @@character_set_client */ ;
 /*!50003 SET @saved_cs_results     = @@character_set_results */ ;
@@ -237,4 +313,4 @@ DELIMITER ;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2021-05-27 20:29:02
+-- Dump completed on 2021-05-29 15:01:55
