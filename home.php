@@ -19,13 +19,33 @@ require 'menu.php';
 
 <div class="container">
 <?php
-  include("conexao.php");
+  include("conexao.php"); 
   $executa=$db->prepare("select u.idusuario as idRemetente,u.usuario as nomeRemetente,u.apelido as apelidoRemetente,u.fotoPerfil as fotoRemetente, idresposta, pergunta, dataResposta, resposta, p.idpergunta, p.mensagem as mensagem, p.remetente, us.fotoPerfil as fotoPerfil, us.apelido as eu, us.usuario as usuario from resposta as r inner join pergunta as p on r.pergunta = p.idpergunta inner join usuario as u on u.idusuario=p.remetente inner join usuario as us on us.idusuario=p.destinatario where p.destinatario in (select seg.follow from seguindo as seg where seg.usuario=:id) or p.destinatario=:id;");
   $executa->BindParam(":id", $_SESSION['idUsuario']);
   $executa->execute();
 
 
   while($linha=$executa->fetch(PDO::FETCH_OBJ)){
+    $executa2=$db->prepare("call curto(:a,:b);");
+    $executa2->BindParam(":a",$linha->idresposta);
+    $executa2->BindParam(":b",$_SESSION['idUsuario']);
+    $executa2->execute();
+    if($executa2){
+      $linha2 =$executa2->fetch(PDO::FETCH_OBJ);
+      
+      
+    }
+  
+    $executa2=$db->prepare("call curtidas(:a);");
+    $executa2->BindParam(":a",$linha->idresposta);
+    
+    $executa2->execute();
+    if($executa2){
+      $linha3 =$executa2->fetch(PDO::FETCH_OBJ);
+      
+      
+    }
+
     
     
    ?>
@@ -57,8 +77,15 @@ require 'menu.php';
       <div class="resposta">
         <?php echo $linha->resposta ?>
         
-         <div class="curtir">          
-         <a><img src="pic/visivel.png" class="like" width="25" height="25"></a>
+         <div class="curtir id<?php echo $linha->idresposta ?>">  
+         <span id="<?php echo $linha->idresposta; ?>"><?php echo $linha3->curtidas ?></span> 
+         <?php
+         
+         if($linha2->curto==0){ ?>
+         <a onclick="curtir(<?php echo $linha->idresposta; ?>)" id="botc<?php echo $linha->idresposta; ?>"><img src="pic/apagado.png" class="like" width="25" height="25"></a> 
+         <?php }else if($linha2->curto==1){ ?>      
+         <a onclick="descurtir(<?php echo $linha->idresposta; ?>)" id="botd<?php echo $linha->idresposta; ?>"><img src="pic/visivel.png" class="like" width="25" height="25"></a>
+         <?php }?>
           </div>
         </div>
 </div>
@@ -176,3 +203,72 @@ require 'menu.php';
 
 
 </style>
+
+<script>
+
+function curtidas(idresposta){
+  $.ajax({
+  url: "curtidas.php",
+  type: "POST",
+  data:{'idresposta' :idresposta}
+}).done(function(data) {
+  var dados = JSON.parse(data);
+ $("#"+idresposta).text(dados.curtidas);
+
+ 
+ 
+
+
+
+
+  
+})
+}
+function curtir(idresposta){
+  $.ajax({
+  url: "curtir.php",
+  type: "POST",
+  data:{'idresposta' :idresposta}
+}).done(function(data) {
+  if(data="sucesso"){
+    
+    curtidas(idresposta);
+    
+    $(".id" +idresposta).append('<a onclick="descurtir('+idresposta+')" id="botd'+idresposta+'"><img src="pic/visivel.png" class="like" width="25" height="25"></a>');
+    $("#botc" + idresposta).remove();
+  }
+
+ 
+ 
+
+
+
+
+  
+})
+}
+
+function descurtir(idresposta){
+  $.ajax({
+  url: "descurtir.php",
+  type: "POST",
+  data:{'idresposta' :idresposta}
+}).done(function(data) {
+  if(data="sucesso"){
+    
+    curtidas(idresposta);
+
+    $(".id" +idresposta).append('<a onclick="curtir('+idresposta+')" id="botc'+idresposta+'"><img src="pic/apagado.png" class="like" width="25" height="25"></a>');
+    $("#botd" + idresposta).remove();
+  }
+
+ 
+ 
+
+
+
+
+  
+})
+}
+</script>

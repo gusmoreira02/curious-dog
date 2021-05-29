@@ -24,15 +24,21 @@ $access_token = $twitter->oauth("oauth/access_token", ["oauth_verifier" => $_REQ
 $_SESSION['access_token'] = $access_token;
 
 $connection = new TwitterOAuth(CONSUMER_KEY,CONSUMER_SECRET, $access_token['oauth_token'], $access_token['oauth_token_secret']);
-echo $access_token['oauth_token'];
+
 $user = $connection->get('account/verify_credentials', ['tweet_mode' => 'extended', 'include_entities' => 'true']);
 	//$content = $twitter->get("account/verify_credentials");
 	$array = json_decode(json_encode($user), true);
 	require 'conexao.php';
 	$executa=$db->prepare("select usuario,apelido,fotoPerfil,idusuario,senha,banner from usuario where oauth_token=:o");
-	$executa->BindParam(":o",$_COOKIE['oauth_token']);
+	$executa->BindParam(":o",$access_token['oauth_token']);
 	$executa->execute();
+	if($executa->rowCount()==1){
+
 	$linha = $executa->fetch(PDO::FETCH_OBJ);
+	if($linha){
+		
+	}
+	
 		if(isset($linha->idusuario)){
 	$_SESSION['usuario'] = $linha->usuario;
 	$_SESSION['apelido'] = $linha->apelido;
@@ -49,7 +55,7 @@ $user = $connection->get('account/verify_credentials', ['tweet_mode' => 'extende
 	$executa3->BindParam(":fotoPerfil", $foto);
 	$executa3->BindParam(":banner", $array['profile_banner_url']);
 	$executa3->execute();
-	header("location: home.php");
+	//header("location: home.php");
     }else{
 	$_SESSION['senha'] = $array['id'];
 	$_SESSION['usuario'] = $array['screen_name'];
@@ -82,13 +88,13 @@ $user = $connection->get('account/verify_credentials', ['tweet_mode' => 'extende
 				unset($_SESSION['oaut_token_secret']);
 				$_SESSION['idUsuario']=$db->lastInsertId();
                 setcookie("oauth_token",$access_token['oauth_token']);
-				header("Location: perfil.php?" . $_SESSION['usuario']);
+			//	header("Location: perfil.php?" . $_SESSION['usuario']);
 
 			}
 
 
 		
-
+		}
 	}
 }
 }else{
