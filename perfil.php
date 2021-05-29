@@ -8,7 +8,7 @@ $pegarperfil=false;
 $separaigual  = explode("?", $_SERVER["REQUEST_URI"]);
 if(sizeof($separaigual)>1){
   $nome = $separaigual;
-$pegarperfil = $db->prepare(" select idusuario, usuario,senha, apelido, fotoPerfil from usuario where usuario=:u");
+$pegarperfil = $db->prepare(" select idusuario, usuario,senha, apelido, fotoPerfil, bio from usuario where usuario=:u");
 $pegarperfil->BindParam(":u",$nome[1]);
 $pegarperfil->execute();
 if($pegarperfil->rowCount()==1){
@@ -75,14 +75,22 @@ require 'cssheader.php';
 </div>
 
 <div class="nome">
+
 <img class="imgperfil" src="<?php echo $pegarperfil->fotoPerfil; ?>" >
 <br>
 <span class="usuario"><?php echo $pegarperfil->apelido; ?></span>
+<div class="divBio">
+<span class="bio"><?php echo $pegarperfil->bio; ?></span>
 </div>
+</div>
+
+
+
 <div id="botao">
 
 <?php if ($pegarperfil!=false && $_SESSION['idUsuario']== $pegarperfil->idusuario){
-    ?> <a href="editarperfil.php?id=<?php echo $_SESSION['idUsuario']; ?>" class="btn btn-light">Editar</a><?php
+    ?> 
+   <button onclick='PegarBio(<?php echo $pegarperfil->idusuario ?>)' type="button" class="btn btn-outline-primary btnbio" data-toggle="modal" data-target="#exampleModal2" id="<?php echo $pegarperfil->idusuario ?>" >Editar Bio</button><?php
     
     
 }else if($sigo->segue ==0){
@@ -137,6 +145,29 @@ require 'cssheader.php';
     </div>
   </div>
 </div>
+
+<div class="modal fade" id="exampleModal2" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Editar Bio</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <div id="ModalBio">
+          <textarea class="form-control text" placeholder="Diga algo sobre você" id="textBio"style="min-width: 100%"></textarea>
+
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" id="enviarmodal" class="btn btn-outline-success" onclick="ModalBio()" data-dismiss="modal">Enviar</button>
+        <button type="button" id="fecharmodal2" class="btn btn-outline-danger" data-dismiss="modal">Fechar</button>
+      </div>
+    </div>
+  </div>
+</div>
 <?php 
 
 
@@ -163,6 +194,11 @@ if($_SESSION['idUsuario']!== $pegarperfil->idusuario){
 </body>
 </html>
 <style type="text/css">
+   @media(width: 450px){
+    .perfil{
+      width: 100%;
+    }
+   }
 #linha {
   width:70%;
   margin-left:15%;
@@ -313,6 +349,22 @@ margin-bottom:2%;
 .dispn{
   margin-left:1%;
 }
+.text{
+  resize: none;
+
+}
+.divBio{
+  margin-right: 50%;
+
+}
+.bio{
+ color: white;
+ font-size: 1em;
+ margin-left: 1%;
+
+
+
+}
 </style>
 <script>
 function seguir(usuario, follow) {
@@ -405,5 +457,27 @@ function perguntar(usuario){
 })
 
 }
+function ModalBio(){ 
+   var usuario = $('#textBio').val();
+    $.ajax({
+  url: "editarperfil.php",
+  type: "POST",
+  data:{'bio' :usuario}
+}).done(function(data) {
+  $("#textBio").val(usuario);
+  
+
+
+  
+})
+}
+function PegarBio(){
+  var usuario = $('#textBio').val();
+    $.ajax({
+  url: "pegarbio.php"
+}).done(function(data) {
+  $("#textBio").val(data);
+
+})}
 
 </script>
