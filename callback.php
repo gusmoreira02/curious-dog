@@ -32,7 +32,7 @@ $user = $connection->get('account/verify_credentials', ['tweet_mode' => 'extende
 	$executa=$db->prepare("select usuario,apelido,fotoPerfil,idusuario,senha,banner from usuario where oauth_token=:o");
 	$executa->BindParam(":o",$access_token['oauth_token']);
 	$executa->execute();
-	if($executa->rowCount()==1){
+	if($executa){
 
 	$linha = $executa->fetch(PDO::FETCH_OBJ);
 	if($linha){
@@ -55,7 +55,7 @@ $user = $connection->get('account/verify_credentials', ['tweet_mode' => 'extende
 	$executa3->BindParam(":fotoPerfil", $foto);
 	$executa3->BindParam(":banner", $array['profile_banner_url']);
 	$executa3->execute();
-	//header("location: home.php");
+	header("location: home.php");
     }else{
 	$_SESSION['senha'] = $array['id'];
 	$_SESSION['usuario'] = $array['screen_name'];
@@ -88,7 +88,7 @@ $user = $connection->get('account/verify_credentials', ['tweet_mode' => 'extende
 				unset($_SESSION['oaut_token_secret']);
 				$_SESSION['idUsuario']=$db->lastInsertId();
                 setcookie("oauth_token",$access_token['oauth_token']);
-			//	header("Location: perfil.php?" . $_SESSION['usuario']);
+				header("Location: perfil.php?" . $_SESSION['usuario']);
 
 			}
 

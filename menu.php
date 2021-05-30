@@ -5,9 +5,6 @@ $url=$_SERVER["REQUEST_URI"];
 ?>
   
   
- 
-
-
 <div class="bs-example">
     <nav class="navbar navbar-expand-md navbar-dark bg-dark fixed-bottom">
         <a href="perfil.php?<?php echo $_SESSION['usuario']; ?>" class="navbar-brand"><?php echo $_SESSION['apelido']; ?></a>
@@ -24,9 +21,9 @@ $url=$_SERVER["REQUEST_URI"];
               echo '<a href="home.php" class="nav-item nav-link ">Início</a>';
             }
             if($url == "/curiousdog/pergunta.php"){
-echo '  <a href="pergunta.php" class="nav-item nav-link active">Perguntas</a>';
+echo '  <a href="pergunta.php" class="nav-item nav-link active">Perguntas<span class="badge bg-primary">0</span</a>';
             }else{
-              echo '<a href="pergunta.php" class="nav-item nav-link">Perguntas</a>';
+              echo '<a href="pergunta.php" class="nav-item nav-link">Perguntas<span class="badge bg-primary">0</span</a>';
             }
 
 
@@ -38,7 +35,7 @@ echo '  <a href="pergunta.php" class="nav-item nav-link active">Perguntas</a>';
 
         
     
-                <a href="#" class="nav-item nav-link disabled" tabindex="-1">Notificações<span class="badge badge-dark">4</span></a>
+                <a href="#" class="nav-item nav-link fas fa-bell sino" tabindex="-1"><span class="badge bg-primary"><?php ?></span></a>
                 
             </div>
 
@@ -90,7 +87,7 @@ echo '  <a href="pergunta.php" class="nav-item nav-link active">Perguntas</a>';
     
   }
 .badge{
-  background-color:transparent;
+  margin-left: 3px;
 }
 .logo{
     position: absolute;
@@ -101,9 +98,25 @@ echo '  <a href="pergunta.php" class="nav-item nav-link active">Perguntas</a>';
 
 
 }
+.sino{
+
+}
+
 
 </style>
 <script>
+  setTimeout(myFunction, 0); 
+  function myFunction(){
+    setTimeout(myFunction, 5000); 
+    $.ajax({
+    url: "nNotificacao.php",
+    success: function(result){
+    $(".badge").text(result);
+
+    }
+
+     }); 
+  }
 
 
 </script>

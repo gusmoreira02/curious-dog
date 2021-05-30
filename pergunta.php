@@ -7,9 +7,6 @@
   require 'cssheader.php';
   
   ?>
-  <link href="fontawesome/css/fontawesome.css" rel="stylesheet">
-  <link href="fontawesome/css/brands.css" rel="stylesheet">
-  <link href="fontawesome/css/solid.css" rel="stylesheet">
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 </head>
 <body>
@@ -35,9 +32,9 @@ require 'menu.php';
     ?>
     <div class="mensagem">
       <div class="remetente"> 
-      <?php  if($linha->anonimo==1){ ?>
+      <?php if($linha->anonimo==1){ ?>
           <a class="usuario" > <img src="pic/biscouito.png"  width="50px" height="50px"><b> Bixcônimo</b></a>
-<?php }else{ ?>
+<?php }else{  ?>
 
   <a class="usuario" href="perfil.php?<?php echo $linha->usuario; ?>"> <img src="<?php echo $linha->fotoPerfil ?>"  width="50px" height="50px"><b> <?php echo $linha->apelido ?></b></a>
 

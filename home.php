@@ -7,7 +7,7 @@
   require 'cssheader.php';
   ?>
 </head>
-<body>
+<body oncontextmenu="return false" onkeydown="return false">
 <img src="pic/logo4.png" id="logo">
 <?php
 
@@ -20,7 +20,7 @@ require 'menu.php';
 <div class="container">
 <?php
   include("conexao.php"); 
-  $executa=$db->prepare("select u.idusuario as idRemetente,u.usuario as nomeRemetente,u.apelido as apelidoRemetente,u.fotoPerfil as fotoRemetente, idresposta, pergunta, dataResposta, resposta, p.idpergunta, p.mensagem as mensagem, p.remetente, us.fotoPerfil as fotoPerfil, us.apelido as eu, us.usuario as usuario from resposta as r inner join pergunta as p on r.pergunta = p.idpergunta inner join usuario as u on u.idusuario=p.remetente inner join usuario as us on us.idusuario=p.destinatario where p.destinatario in (select seg.follow from seguindo as seg where seg.usuario=:id) or p.destinatario=:id;");
+  $executa=$db->prepare("select u.idusuario as idRemetente,u.usuario as nomeRemetente,u.apelido as apelidoRemetente,u.fotoPerfil as fotoRemetente, idresposta, pergunta, dataResposta, resposta, p.idpergunta, p.mensagem as mensagem, p.remetente, us.fotoPerfil as fotoPerfil, us.apelido as eu, us.usuario as usuario from resposta as r inner join pergunta as p on r.pergunta = p.idpergunta inner join usuario as u on u.idusuario=p.remetente inner join usuario as us on us.idusuario=p.destinatario where p.destinatario in (select seg.follow from seguindo as seg where seg.usuario=:id) or p.destinatario=:id order by dataResposta desc;");
   $executa->BindParam(":id", $_SESSION['idUsuario']);
   $executa->execute();
 

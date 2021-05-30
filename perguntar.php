@@ -3,9 +3,9 @@ require 'seguranca.php';
 	require 'conexao.php';
 
 	if(isset($_POST['usuario']) && isset($_POST['mensagem'] ) && isset($_POST['anom'])){
-        if($anom=="true"){
+        if($_POST['anom']=="true"){
             $ba=1;
-        }else if($anom == "false"){
+        }else if($_POST['anom'] == "false"){
             $ba=0;
 
         }
