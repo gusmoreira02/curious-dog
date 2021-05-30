@@ -7,7 +7,7 @@
   require 'cssheader.php';
   ?>
 </head>
-<body oncontextmenu="return false" onkeydown="return false">
+<body >
 <img src="pic/logo4.png" id="logo">
 <?php
 
@@ -94,6 +94,7 @@ require 'menu.php';
   }
 
 ?>
+
 </body>
 </html>
 <style type="text/css">

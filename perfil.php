@@ -194,11 +194,7 @@ if($_SESSION['idUsuario']!== $pegarperfil->idusuario){
 </body>
 </html>
 <style type="text/css">
-   @media(width: 450px){
-    .perfil{
-      width: 100%;
-    }
-   }
+  
 #linha {
   width:70%;
   margin-left:15%;
@@ -270,6 +266,7 @@ body{
     
 
 }
+
 .pb{
   margin-top:1%;
   font-size: clamp(0.5em, 1em + 1vw, 1em);
@@ -282,8 +279,9 @@ body{
 text-align:center;
 
 }
+@media screen and (max-width: 600px) {
 #pergunta{
-  width:50%;
+  width:65vw;
   text-align:center;
   
   
@@ -294,6 +292,22 @@ text-align:center;
   
 
 }
+}
+@media screen and (min-width: 600px) {
+#pergunta{
+  width:50vw;
+  text-align:center;
+  
+  
+  font-size: clamp(0.5em, 1em + 1vw, 1em);
+  border-radius:10px;
+  resize:none;
+  
+  
+
+}
+}
+
 #pergunta:focus{
   outline:none;
 }
