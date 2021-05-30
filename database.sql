@@ -16,6 +16,93 @@
 /*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
 
 --
+-- Table structure for table `notificacurtida`
+--
+
+DROP TABLE IF EXISTS `notificacurtida`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `notificacurtida` (
+  `idnotificacurtida` int(11) NOT NULL AUTO_INCREMENT,
+  `resposta` int(11) DEFAULT NULL,
+  `usuario` int(11) DEFAULT NULL,
+  `visto` tinyint(1) DEFAULT NULL,
+  `datanoti` datetime DEFAULT CURRENT_TIMESTAMP,
+  PRIMARY KEY (`idnotificacurtida`),
+  KEY `fk_12312397_idx` (`resposta`),
+  KEY `fk_89236_idx` (`usuario`),
+  CONSTRAINT `fk_12312397` FOREIGN KEY (`resposta`) REFERENCES `resposta` (`idresposta`) ON DELETE NO ACTION ON UPDATE NO ACTION,
+  CONSTRAINT `fk_89236` FOREIGN KEY (`usuario`) REFERENCES `usuario` (`idusuario`) ON DELETE NO ACTION ON UPDATE NO ACTION
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `notificacurtida`
+--
+
+LOCK TABLES `notificacurtida` WRITE;
+/*!40000 ALTER TABLE `notificacurtida` DISABLE KEYS */;
+INSERT INTO `notificacurtida` VALUES (2,79,10,0,'2021-05-29 23:42:16');
+/*!40000 ALTER TABLE `notificacurtida` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `notificapergunta`
+--
+
+DROP TABLE IF EXISTS `notificapergunta`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `notificapergunta` (
+  `idnotificacao` int(11) NOT NULL AUTO_INCREMENT,
+  `pergunta` int(11) DEFAULT NULL,
+  `visto` tinyint(1) DEFAULT NULL,
+  `datanoti` datetime DEFAULT CURRENT_TIMESTAMP,
+  PRIMARY KEY (`idnotificacao`),
+  KEY `fk_6476_idx` (`pergunta`),
+  CONSTRAINT `fk_6476` FOREIGN KEY (`pergunta`) REFERENCES `pergunta` (`idpergunta`) ON DELETE NO ACTION ON UPDATE NO ACTION
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `notificapergunta`
+--
+
+LOCK TABLES `notificapergunta` WRITE;
+/*!40000 ALTER TABLE `notificapergunta` DISABLE KEYS */;
+INSERT INTO `notificapergunta` VALUES (1,36,0,'2021-05-29 23:36:16');
+/*!40000 ALTER TABLE `notificapergunta` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `notificaresposta`
+--
+
+DROP TABLE IF EXISTS `notificaresposta`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `notificaresposta` (
+  `idnotificaresposta` int(11) NOT NULL AUTO_INCREMENT,
+  `resposta` int(11) DEFAULT NULL,
+  `visto` tinyint(1) DEFAULT NULL,
+  `datanoti` datetime DEFAULT CURRENT_TIMESTAMP,
+  PRIMARY KEY (`idnotificaresposta`),
+  KEY `fk_94762_idx` (`resposta`),
+  CONSTRAINT `fk_94762` FOREIGN KEY (`resposta`) REFERENCES `resposta` (`idresposta`) ON DELETE NO ACTION ON UPDATE NO ACTION
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `notificaresposta`
+--
+
+LOCK TABLES `notificaresposta` WRITE;
+/*!40000 ALTER TABLE `notificaresposta` DISABLE KEYS */;
+INSERT INTO `notificaresposta` VALUES (1,83,0,'2021-05-29 23:37:34');
+/*!40000 ALTER TABLE `notificaresposta` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
 -- Table structure for table `pergunta`
 --
 
@@ -34,7 +121,7 @@ CREATE TABLE `pergunta` (
   KEY `remetente` (`remetente`),
   CONSTRAINT `pergunta_ibfk_1` FOREIGN KEY (`destinatario`) REFERENCES `usuario` (`idusuario`),
   CONSTRAINT `pergunta_ibfk_2` FOREIGN KEY (`remetente`) REFERENCES `usuario` (`idusuario`)
-) ENGINE=InnoDB AUTO_INCREMENT=36 DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB AUTO_INCREMENT=37 DEFAULT CHARSET=utf8mb4;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -43,9 +130,27 @@ CREATE TABLE `pergunta` (
 
 LOCK TABLES `pergunta` WRITE;
 /*!40000 ALTER TABLE `pergunta` DISABLE KEYS */;
-INSERT INTO `pergunta` VALUES (7,'aaaaaa asdasdas',8,7,'2021-05-24 00:00:46',NULL),(9,'asaaa',4,3,'2021-05-24 00:16:01',NULL),(17,'a',7,10,'2021-05-24 23:12:23',NULL),(28,'aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa',7,10,'2021-05-25 01:07:54',NULL),(31,'asdasd',10,7,'2021-05-27 18:34:13',NULL),(32,'salve danilol',7,10,'2021-05-27 19:07:49',NULL),(33,'asdasd',7,10,'2021-05-27 20:17:55',1),(34,'as',8,10,'2021-05-27 20:19:10',1),(35,'asdasdasd',7,10,'2021-05-27 20:21:46',NULL);
+INSERT INTO `pergunta` VALUES (7,'aaaaaa asdasdas',8,7,'2021-05-24 00:00:46',NULL),(9,'asaaa',4,3,'2021-05-24 00:16:01',NULL),(17,'a',7,10,'2021-05-24 23:12:23',NULL),(28,'aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa',7,10,'2021-05-25 01:07:54',NULL),(31,'asdasd',10,7,'2021-05-27 18:34:13',NULL),(32,'salve danilol',7,10,'2021-05-27 19:07:49',NULL),(33,'asdasd',7,10,'2021-05-27 20:17:55',1),(34,'as',8,10,'2021-05-27 20:19:10',1),(35,'asdasdasd',7,10,'2021-05-27 20:21:46',NULL),(36,'asdasdas',7,10,'2021-05-29 23:36:16',NULL);
 /*!40000 ALTER TABLE `pergunta` ENABLE KEYS */;
 UNLOCK TABLES;
+/*!50003 SET @saved_cs_client      = @@character_set_client */ ;
+/*!50003 SET @saved_cs_results     = @@character_set_results */ ;
+/*!50003 SET @saved_col_connection = @@collation_connection */ ;
+/*!50003 SET character_set_client  = utf8mb4 */ ;
+/*!50003 SET character_set_results = utf8mb4 */ ;
+/*!50003 SET collation_connection  = utf8mb4_general_ci */ ;
+/*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
+/*!50003 SET sql_mode              = 'STRICT_TRANS_TABLES,NO_AUTO_CREATE_USER,NO_ENGINE_SUBSTITUTION' */ ;
+DELIMITER ;;
+/*!50003 CREATE*/ /*!50017 DEFINER=`root`@`localhost`*/ /*!50003 TRIGGER `database`.`pergunta_AFTER_INSERT` AFTER INSERT ON `pergunta` FOR EACH ROW
+BEGIN
+insert into notificapergunta(pergunta,visto) values(new.idpergunta,0);
+END */;;
+DELIMITER ;
+/*!50003 SET sql_mode              = @saved_sql_mode */ ;
+/*!50003 SET character_set_client  = @saved_cs_client */ ;
+/*!50003 SET character_set_results = @saved_cs_results */ ;
+/*!50003 SET collation_connection  = @saved_col_connection */ ;
 
 --
 -- Table structure for table `resposta`
@@ -62,7 +167,7 @@ CREATE TABLE `resposta` (
   PRIMARY KEY (`idresposta`),
   KEY `pergunta` (`pergunta`),
   CONSTRAINT `resposta_ibfk_1` FOREIGN KEY (`pergunta`) REFERENCES `pergunta` (`idpergunta`)
-) ENGINE=InnoDB AUTO_INCREMENT=81 DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB AUTO_INCREMENT=84 DEFAULT CHARSET=utf8mb4;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -71,9 +176,27 @@ CREATE TABLE `resposta` (
 
 LOCK TABLES `resposta` WRITE;
 /*!40000 ALTER TABLE `resposta` DISABLE KEYS */;
-INSERT INTO `resposta` VALUES (78,17,'2021-05-25 01:31:46','salve'),(79,28,'2021-05-25 21:24:22','teste pinduca'),(80,32,'2021-05-27 19:08:13','teste edanilo');
+INSERT INTO `resposta` VALUES (78,17,'2021-05-25 01:31:46','salve'),(79,28,'2021-05-25 21:24:22','teste pinduca'),(80,32,'2021-05-27 19:08:13','teste edanilo'),(81,34,'2021-05-29 17:42:07','asdads'),(83,36,'2021-05-29 23:37:34','asdasdadd');
 /*!40000 ALTER TABLE `resposta` ENABLE KEYS */;
 UNLOCK TABLES;
+/*!50003 SET @saved_cs_client      = @@character_set_client */ ;
+/*!50003 SET @saved_cs_results     = @@character_set_results */ ;
+/*!50003 SET @saved_col_connection = @@collation_connection */ ;
+/*!50003 SET character_set_client  = utf8mb4 */ ;
+/*!50003 SET character_set_results = utf8mb4 */ ;
+/*!50003 SET collation_connection  = utf8mb4_general_ci */ ;
+/*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
+/*!50003 SET sql_mode              = 'STRICT_TRANS_TABLES,NO_AUTO_CREATE_USER,NO_ENGINE_SUBSTITUTION' */ ;
+DELIMITER ;;
+/*!50003 CREATE*/ /*!50017 DEFINER=`root`@`localhost`*/ /*!50003 TRIGGER `database`.`resposta_AFTER_INSERT` AFTER INSERT ON `resposta` FOR EACH ROW
+BEGIN
+insert into notificaresposta(resposta,visto) values(new.idresposta,0);
+END */;;
+DELIMITER ;
+/*!50003 SET sql_mode              = @saved_sql_mode */ ;
+/*!50003 SET character_set_client  = @saved_cs_client */ ;
+/*!50003 SET character_set_results = @saved_cs_results */ ;
+/*!50003 SET collation_connection  = @saved_col_connection */ ;
 
 --
 -- Table structure for table `respostacurtida`
@@ -102,6 +225,24 @@ LOCK TABLES `respostacurtida` WRITE;
 INSERT INTO `respostacurtida` VALUES (79,8),(78,10),(79,10);
 /*!40000 ALTER TABLE `respostacurtida` ENABLE KEYS */;
 UNLOCK TABLES;
+/*!50003 SET @saved_cs_client      = @@character_set_client */ ;
+/*!50003 SET @saved_cs_results     = @@character_set_results */ ;
+/*!50003 SET @saved_col_connection = @@collation_connection */ ;
+/*!50003 SET character_set_client  = utf8mb4 */ ;
+/*!50003 SET character_set_results = utf8mb4 */ ;
+/*!50003 SET collation_connection  = utf8mb4_general_ci */ ;
+/*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
+/*!50003 SET sql_mode              = 'STRICT_TRANS_TABLES,NO_AUTO_CREATE_USER,NO_ENGINE_SUBSTITUTION' */ ;
+DELIMITER ;;
+/*!50003 CREATE*/ /*!50017 DEFINER=`root`@`localhost`*/ /*!50003 TRIGGER `database`.`respostacurtida_AFTER_INSERT` AFTER INSERT ON `respostacurtida` FOR EACH ROW
+BEGIN
+insert into notificacurtida(resposta,usuario,visto) values(new.resposta,new.usuario,0);
+END */;;
+DELIMITER ;
+/*!50003 SET sql_mode              = @saved_sql_mode */ ;
+/*!50003 SET character_set_client  = @saved_cs_client */ ;
+/*!50003 SET character_set_results = @saved_cs_results */ ;
+/*!50003 SET collation_connection  = @saved_col_connection */ ;
 
 --
 -- Table structure for table `seguindo`
@@ -313,4 +454,4 @@ DELIMITER ;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2021-05-29 15:01:55
+-- Dump completed on 2021-05-29 23:43:08
