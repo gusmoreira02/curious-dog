@@ -33,10 +33,10 @@ echo '  <a href="pergunta.php" class="nav-item nav-link active">Perguntas<span c
  
 
 
-        
-    
-                <a href="#" class="nav-item nav-link fas fa-bell sino" tabindex="-1"><span class="badge bg-primary"><?php ?></span></a>
-                
+                  
+                <a href="#" class="nav-item nav-link fas fa-bell sino" data-toggle="modal" data-target="#exampleModal" onclick="notifica(<?php echo $_SESSION['idUsuario'] ?>)"><span class="badge bg-primary"></span></a>
+
+  
             </div>
 
             <div class="navbar-nav ml-auto">
@@ -47,7 +47,28 @@ echo '  <a href="pergunta.php" class="nav-item nav-link active">Perguntas<span c
 
     </nav>
 </div>
+<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Notificação</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <div id="ModalSeguidores">
 
+
+        </div>
+      </div>
+      <div class="modal-footer">
+  
+        <button type="button" id="fecharmodal" class="btn btn-secondary" data-dismiss="modal">Fechar</button>
+      </div>
+    </div>
+  </div>
+</div>
   
 
 <style type="text/css">
@@ -117,6 +138,15 @@ echo '  <a href="pergunta.php" class="nav-item nav-link active">Perguntas<span c
 
      }); 
   }
+  function notifica(usuario) {
+  $.ajax({
+  url: "nNotificacao.php",
+  type: "POST",
+  data:{'usuario' :usuario}
+}).done(function(data) {
+  
+});
+}
 
 
 </script>

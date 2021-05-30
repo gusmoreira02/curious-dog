@@ -14,4 +14,6 @@
 
 $numero = $executa->rowCount() + $executa2->rowCount() + $executa3->rowCount();
 echo $numero;
+
+	
 ?> 
