@@ -34,7 +34,7 @@ echo '  <a href="pergunta.php" class="nav-item nav-link active">Perguntas<span c
 
 
                   
-                <a href="#" class="nav-item nav-link fas fa-bell sino" data-toggle="modal" data-target="#exampleModal" onclick="notifica(<?php echo $_SESSION['idUsuario'] ?>)"><span class="badge bg-primary"></span></a>
+                <a href="#" class="nav-item nav-link fas fa-bell sino" data-toggle="modal" data-target="#modalnoti" onclick="notifica(<?php echo $_SESSION['idUsuario'] ?>)"><span class="badge bg-primary"></span></a>
 
   
             </div>
@@ -47,7 +47,7 @@ echo '  <a href="pergunta.php" class="nav-item nav-link active">Perguntas<span c
 
     </nav>
 </div>
-<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+<div class="modal fade" id="modalnoti" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
   <div class="modal-dialog">
     <div class="modal-content">
       <div class="modal-header">
@@ -56,11 +56,21 @@ echo '  <a href="pergunta.php" class="nav-item nav-link active">Perguntas<span c
           <span aria-hidden="true">&times;</span>
         </button>
       </div>
-      <div class="modal-body">
-        <div id="ModalSeguidores">
-
+      <div class="modal-bodyn">
+        <div class="new">
+            <div class="noti">
+          </div>
 
         </div>
+<div class="old">
+
+<div class="on">
+
+</div>
+
+</div>
+
+        
       </div>
       <div class="modal-footer">
   
@@ -72,6 +82,11 @@ echo '  <a href="pergunta.php" class="nav-item nav-link active">Perguntas<span c
   
 
 <style type="text/css">
+.modal-bodyn{
+  overflow-y:scroll;
+  max-height:30vh;
+  
+}
   body{
     background-color: #141211;
 
@@ -124,6 +139,29 @@ echo '  <a href="pergunta.php" class="nav-item nav-link active">Perguntas<span c
 }
 
 
+.dn{
+  
+  margin-top:2%;
+  margin-left:5%;
+  border-left:2px solid #0d6efd;
+}
+.do{
+  margin-top:2%;
+  margin-left:5%;
+  
+
+}
+.do img{
+  width:3vw;
+  height:3vw;
+  border-radius:50%;
+}
+.dn img{
+  
+  width:3vw;
+  height:3vw;
+  border-radius:50%;
+}
 </style>
 <script>
   setTimeout(myFunction, 0); 
@@ -139,13 +177,64 @@ echo '  <a href="pergunta.php" class="nav-item nav-link active">Perguntas<span c
      }); 
   }
   function notifica(usuario) {
-  $.ajax({
-  url: "nNotificacao.php",
-  type: "POST",
-  data:{'usuario' :usuario}
+
+    $(".noti").empty();
+    $(".on").empty();
+
+$.ajax({
+  url: "displayON.php"
+  
 }).done(function(data) {
   
+  var dados = JSON.parse(data);
+
+for(let [index,a] of dados.entries()){
+  
+  for(let [index, d] of a.entries()){
+
+
+    if (typeof d.idresposta !== 'undefined') {
+      
+      $(".on").append('<div class="do"><a ><img src="'+d.fotoPerfil+'">'+ d.apelido +' respondeu sua pergunta </a></div>');
+}else if(typeof d.idpergunta !== 'undefined'){
+  
+  $(".on").append('<div class="do"><a ><img src="'+d.fotoPerfil+'">'+ d.apelido +' te fez uma pergunta  </a></div>');
+}
+else if(typeof d.curtida !== 'undefined'){
+  
+  $(".on").append('<div class="do"><a ><img src="'+d.fotoPerfil+'">'+ d.apelido +' curtiu sua resposta  </a></div>');
+}
+  }
+  }
 });
+$.ajax({
+  url: "displayNN.php"
+  
+}).done(function(data) {
+  
+  var dados = JSON.parse(data);
+
+for(let [index,a] of dados.entries()){
+  
+  for(let [index, d] of a.entries()){
+    console.log(d);
+
+    if (typeof d.idresposta !== 'undefined') {
+      
+      $(".noti").append('<div class="dn"><a ><img src="'+d.fotoPerfil+'">'+ d.apelido +' respondeu sua pergunta </a></div>');
+}else if(typeof d.idpergunta !== 'undefined'){
+  
+  $(".noti").append('<div class="dn"><a ><img src="'+d.fotoPerfil+'">'+ d.apelido +' te fez uma pergunta  </a></div>');
+}
+else if(typeof d.curtida !== 'undefined'){
+  console.log("a");
+  $(".noti").append('<div class="dn"><a ><img src="'+d.fotoPerfil+'">'+ d.apelido +' curtiu sua resposta  </a></div>');
+}
+  }
+  }
+});
+
+
 }
 
 

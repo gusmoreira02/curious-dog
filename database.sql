@@ -16,6 +16,24 @@
 /*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
 
 --
+-- Temporary view structure for view `ncurtida`
+--
+
+DROP TABLE IF EXISTS `ncurtida`;
+/*!50001 DROP VIEW IF EXISTS `ncurtida`*/;
+SET @saved_cs_client     = @@character_set_client;
+/*!50503 SET character_set_client = utf8mb4 */;
+/*!50001 CREATE VIEW `ncurtida` AS SELECT 
+ 1 AS `idnotificacurtida`,
+ 1 AS `resposta`,
+ 1 AS `usuario`,
+ 1 AS `visto`,
+ 1 AS `datanoti`,
+ 1 AS `idusuario`,
+ 1 AS `idresposta`*/;
+SET character_set_client = @saved_cs_client;
+
+--
 -- Table structure for table `notificacurtida`
 --
 
@@ -33,7 +51,7 @@ CREATE TABLE `notificacurtida` (
   KEY `fk_89236_idx` (`usuario`),
   CONSTRAINT `fk_12312397` FOREIGN KEY (`resposta`) REFERENCES `resposta` (`idresposta`) ON DELETE NO ACTION ON UPDATE NO ACTION,
   CONSTRAINT `fk_89236` FOREIGN KEY (`usuario`) REFERENCES `usuario` (`idusuario`) ON DELETE NO ACTION ON UPDATE NO ACTION
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB AUTO_INCREMENT=16 DEFAULT CHARSET=utf8mb4;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -42,7 +60,7 @@ CREATE TABLE `notificacurtida` (
 
 LOCK TABLES `notificacurtida` WRITE;
 /*!40000 ALTER TABLE `notificacurtida` DISABLE KEYS */;
-INSERT INTO `notificacurtida` VALUES (2,79,10,0,'2021-05-29 23:42:16');
+INSERT INTO `notificacurtida` VALUES (10,80,7,1,'2021-05-30 18:07:39'),(11,87,10,0,'2021-05-30 18:07:59'),(12,79,7,1,'2021-05-30 18:08:06'),(13,81,8,1,'2021-05-30 18:25:55'),(14,83,7,1,'2021-05-30 18:26:47'),(15,78,7,0,'2021-05-30 19:47:29');
 /*!40000 ALTER TABLE `notificacurtida` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -61,7 +79,7 @@ CREATE TABLE `notificapergunta` (
   PRIMARY KEY (`idnotificacao`),
   KEY `fk_6476_idx` (`pergunta`),
   CONSTRAINT `fk_6476` FOREIGN KEY (`pergunta`) REFERENCES `pergunta` (`idpergunta`) ON DELETE NO ACTION ON UPDATE NO ACTION
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB AUTO_INCREMENT=13 DEFAULT CHARSET=utf8mb4;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -70,7 +88,7 @@ CREATE TABLE `notificapergunta` (
 
 LOCK TABLES `notificapergunta` WRITE;
 /*!40000 ALTER TABLE `notificapergunta` DISABLE KEYS */;
-INSERT INTO `notificapergunta` VALUES (1,36,0,'2021-05-29 23:36:16');
+INSERT INTO `notificapergunta` VALUES (11,46,1,'2021-05-30 18:27:34'),(12,47,0,'2021-05-30 18:27:59');
 /*!40000 ALTER TABLE `notificapergunta` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -89,7 +107,7 @@ CREATE TABLE `notificaresposta` (
   PRIMARY KEY (`idnotificaresposta`),
   KEY `fk_94762_idx` (`resposta`),
   CONSTRAINT `fk_94762` FOREIGN KEY (`resposta`) REFERENCES `resposta` (`idresposta`) ON DELETE NO ACTION ON UPDATE NO ACTION
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8mb4;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -98,9 +116,45 @@ CREATE TABLE `notificaresposta` (
 
 LOCK TABLES `notificaresposta` WRITE;
 /*!40000 ALTER TABLE `notificaresposta` DISABLE KEYS */;
-INSERT INTO `notificaresposta` VALUES (1,83,0,'2021-05-29 23:37:34');
+INSERT INTO `notificaresposta` VALUES (6,88,1,'2021-05-30 18:28:10');
 /*!40000 ALTER TABLE `notificaresposta` ENABLE KEYS */;
 UNLOCK TABLES;
+
+--
+-- Temporary view structure for view `npergunta`
+--
+
+DROP TABLE IF EXISTS `npergunta`;
+/*!50001 DROP VIEW IF EXISTS `npergunta`*/;
+SET @saved_cs_client     = @@character_set_client;
+/*!50503 SET character_set_client = utf8mb4 */;
+/*!50001 CREATE VIEW `npergunta` AS SELECT 
+ 1 AS `idnotificacao`,
+ 1 AS `pergunta`,
+ 1 AS `visto`,
+ 1 AS `datanoti`,
+ 1 AS `idpergunta`,
+ 1 AS `usuario`*/;
+SET character_set_client = @saved_cs_client;
+
+--
+-- Temporary view structure for view `nresposta`
+--
+
+DROP TABLE IF EXISTS `nresposta`;
+/*!50001 DROP VIEW IF EXISTS `nresposta`*/;
+SET @saved_cs_client     = @@character_set_client;
+/*!50503 SET character_set_client = utf8mb4 */;
+/*!50001 CREATE VIEW `nresposta` AS SELECT 
+ 1 AS `idnotificaresposta`,
+ 1 AS `resposta`,
+ 1 AS `visto`,
+ 1 AS `datanoti`,
+ 1 AS `idresposta`,
+ 1 AS `rPergunta`,
+ 1 AS `idpergunta`,
+ 1 AS `usuario`*/;
+SET character_set_client = @saved_cs_client;
 
 --
 -- Table structure for table `pergunta`
@@ -121,7 +175,7 @@ CREATE TABLE `pergunta` (
   KEY `remetente` (`remetente`),
   CONSTRAINT `pergunta_ibfk_1` FOREIGN KEY (`destinatario`) REFERENCES `usuario` (`idusuario`),
   CONSTRAINT `pergunta_ibfk_2` FOREIGN KEY (`remetente`) REFERENCES `usuario` (`idusuario`)
-) ENGINE=InnoDB AUTO_INCREMENT=37 DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB AUTO_INCREMENT=48 DEFAULT CHARSET=utf8mb4;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -130,7 +184,7 @@ CREATE TABLE `pergunta` (
 
 LOCK TABLES `pergunta` WRITE;
 /*!40000 ALTER TABLE `pergunta` DISABLE KEYS */;
-INSERT INTO `pergunta` VALUES (7,'aaaaaa asdasdas',8,7,'2021-05-24 00:00:46',NULL),(9,'asaaa',4,3,'2021-05-24 00:16:01',NULL),(17,'a',7,10,'2021-05-24 23:12:23',NULL),(28,'aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa',7,10,'2021-05-25 01:07:54',NULL),(31,'asdasd',10,7,'2021-05-27 18:34:13',NULL),(32,'salve danilol',7,10,'2021-05-27 19:07:49',NULL),(33,'asdasd',7,10,'2021-05-27 20:17:55',1),(34,'as',8,10,'2021-05-27 20:19:10',1),(35,'asdasdasd',7,10,'2021-05-27 20:21:46',NULL),(36,'asdasdas',7,10,'2021-05-29 23:36:16',NULL);
+INSERT INTO `pergunta` VALUES (7,'aaaaaa asdasdas',8,7,'2021-05-24 00:00:46',NULL),(9,'asaaa',4,3,'2021-05-24 00:16:01',NULL),(17,'a',7,10,'2021-05-24 23:12:23',NULL),(28,'aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa',7,10,'2021-05-25 01:07:54',NULL),(31,'asdasd',10,7,'2021-05-27 18:34:13',NULL),(32,'salve danilol',7,10,'2021-05-27 19:07:49',NULL),(33,'asdasd',7,10,'2021-05-27 20:17:55',1),(34,'as',8,10,'2021-05-27 20:19:10',1),(35,'asdasdasd',7,10,'2021-05-27 20:21:46',NULL),(36,'asdasdas',7,10,'2021-05-29 23:36:16',NULL),(37,'salve',10,7,'2021-05-30 16:29:03',NULL),(38,'salve',10,7,'2021-05-30 16:29:04',NULL),(39,'salve',10,7,'2021-05-30 16:29:05',NULL),(40,'salve',10,7,'2021-05-30 16:29:06',NULL),(41,'salve',10,7,'2021-05-30 16:29:06',NULL),(42,'salve',10,7,'2021-05-30 16:29:07',NULL),(43,'salve',10,7,'2021-05-30 16:29:07',NULL),(44,'salve',10,7,'2021-05-30 16:29:08',NULL),(45,'salve',7,10,'2021-05-30 17:16:40',NULL),(46,'testen',7,10,'2021-05-30 18:27:34',NULL),(47,'testen',10,7,'2021-05-30 18:27:59',NULL);
 /*!40000 ALTER TABLE `pergunta` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!50003 SET @saved_cs_client      = @@character_set_client */ ;
@@ -167,7 +221,7 @@ CREATE TABLE `resposta` (
   PRIMARY KEY (`idresposta`),
   KEY `pergunta` (`pergunta`),
   CONSTRAINT `resposta_ibfk_1` FOREIGN KEY (`pergunta`) REFERENCES `pergunta` (`idpergunta`)
-) ENGINE=InnoDB AUTO_INCREMENT=84 DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB AUTO_INCREMENT=89 DEFAULT CHARSET=utf8mb4;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -176,7 +230,7 @@ CREATE TABLE `resposta` (
 
 LOCK TABLES `resposta` WRITE;
 /*!40000 ALTER TABLE `resposta` DISABLE KEYS */;
-INSERT INTO `resposta` VALUES (78,17,'2021-05-25 01:31:46','salve'),(79,28,'2021-05-25 21:24:22','teste pinduca'),(80,32,'2021-05-27 19:08:13','teste edanilo'),(81,34,'2021-05-29 17:42:07','asdads'),(83,36,'2021-05-29 23:37:34','asdasdadd');
+INSERT INTO `resposta` VALUES (78,17,'2021-05-25 01:31:46','salve'),(79,28,'2021-05-25 21:24:22','teste pinduca'),(80,32,'2021-05-27 19:08:13','teste edanilo'),(81,34,'2021-05-29 17:42:07','asdads'),(83,36,'2021-05-29 23:37:34','asdasdadd'),(84,37,'2021-05-30 16:29:36','asd'),(85,38,'2021-05-30 16:29:36','asdasdd'),(86,39,'2021-05-30 16:29:36','asd'),(87,40,'2021-05-30 16:29:36','adasdasd'),(88,47,'2021-05-30 18:28:10','testen');
 /*!40000 ALTER TABLE `resposta` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!50003 SET @saved_cs_client      = @@character_set_client */ ;
@@ -222,7 +276,7 @@ CREATE TABLE `respostacurtida` (
 
 LOCK TABLES `respostacurtida` WRITE;
 /*!40000 ALTER TABLE `respostacurtida` DISABLE KEYS */;
-INSERT INTO `respostacurtida` VALUES (79,8),(78,10),(79,10);
+INSERT INTO `respostacurtida` VALUES (78,10),(79,10),(80,10),(81,10),(83,10),(87,10);
 /*!40000 ALTER TABLE `respostacurtida` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!50003 SET @saved_cs_client      = @@character_set_client */ ;
@@ -236,7 +290,7 @@ UNLOCK TABLES;
 DELIMITER ;;
 /*!50003 CREATE*/ /*!50017 DEFINER=`root`@`localhost`*/ /*!50003 TRIGGER `database`.`respostacurtida_AFTER_INSERT` AFTER INSERT ON `respostacurtida` FOR EACH ROW
 BEGIN
-insert into notificacurtida(resposta,usuario,visto) values(new.resposta,new.usuario,0);
+insert into notificacurtida(resposta,usuario,visto) values(new.resposta,(select pergunta.remetente from resposta inner join pergunta on resposta.pergunta = pergunta.idpergunta where resposta.idresposta=new.resposta),0);
 END */;;
 DELIMITER ;
 /*!50003 SET sql_mode              = @saved_sql_mode */ ;
@@ -260,7 +314,7 @@ CREATE TABLE `seguindo` (
   KEY `usuario` (`usuario`),
   CONSTRAINT `seguindo_ibfk_1` FOREIGN KEY (`follow`) REFERENCES `usuario` (`idusuario`),
   CONSTRAINT `seguindo_ibfk_2` FOREIGN KEY (`usuario`) REFERENCES `usuario` (`idusuario`)
-) ENGINE=InnoDB AUTO_INCREMENT=129 DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB AUTO_INCREMENT=131 DEFAULT CHARSET=utf8mb4;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -269,7 +323,7 @@ CREATE TABLE `seguindo` (
 
 LOCK TABLES `seguindo` WRITE;
 /*!40000 ALTER TABLE `seguindo` DISABLE KEYS */;
-INSERT INTO `seguindo` VALUES (4,8,7),(5,8,3),(128,10,7);
+INSERT INTO `seguindo` VALUES (4,8,7),(5,8,3),(128,10,7),(129,10,8),(130,10,4);
 /*!40000 ALTER TABLE `seguindo` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -444,6 +498,60 @@ DELIMITER ;
 /*!50003 SET character_set_client  = @saved_cs_client */ ;
 /*!50003 SET character_set_results = @saved_cs_results */ ;
 /*!50003 SET collation_connection  = @saved_col_connection */ ;
+
+--
+-- Final view structure for view `ncurtida`
+--
+
+/*!50001 DROP VIEW IF EXISTS `ncurtida`*/;
+/*!50001 SET @saved_cs_client          = @@character_set_client */;
+/*!50001 SET @saved_cs_results         = @@character_set_results */;
+/*!50001 SET @saved_col_connection     = @@collation_connection */;
+/*!50001 SET character_set_client      = utf8mb4 */;
+/*!50001 SET character_set_results     = utf8mb4 */;
+/*!50001 SET collation_connection      = utf8mb4_general_ci */;
+/*!50001 CREATE ALGORITHM=UNDEFINED */
+/*!50013 DEFINER=`root`@`localhost` SQL SECURITY DEFINER */
+/*!50001 VIEW `ncurtida` AS select `notificacurtida`.`idnotificacurtida` AS `idnotificacurtida`,`notificacurtida`.`resposta` AS `resposta`,`notificacurtida`.`usuario` AS `usuario`,`notificacurtida`.`visto` AS `visto`,`notificacurtida`.`datanoti` AS `datanoti`,`usuario`.`idusuario` AS `idusuario`,`resposta`.`idresposta` AS `idresposta` from ((`notificacurtida` join `usuario` on((`notificacurtida`.`usuario` = `usuario`.`idusuario`))) join `resposta` on((`notificacurtida`.`resposta` = `resposta`.`idresposta`))) */;
+/*!50001 SET character_set_client      = @saved_cs_client */;
+/*!50001 SET character_set_results     = @saved_cs_results */;
+/*!50001 SET collation_connection      = @saved_col_connection */;
+
+--
+-- Final view structure for view `npergunta`
+--
+
+/*!50001 DROP VIEW IF EXISTS `npergunta`*/;
+/*!50001 SET @saved_cs_client          = @@character_set_client */;
+/*!50001 SET @saved_cs_results         = @@character_set_results */;
+/*!50001 SET @saved_col_connection     = @@collation_connection */;
+/*!50001 SET character_set_client      = utf8mb4 */;
+/*!50001 SET character_set_results     = utf8mb4 */;
+/*!50001 SET collation_connection      = utf8mb4_general_ci */;
+/*!50001 CREATE ALGORITHM=UNDEFINED */
+/*!50013 DEFINER=`root`@`localhost` SQL SECURITY DEFINER */
+/*!50001 VIEW `npergunta` AS select `notificapergunta`.`idnotificacao` AS `idnotificacao`,`notificapergunta`.`pergunta` AS `pergunta`,`notificapergunta`.`visto` AS `visto`,`notificapergunta`.`datanoti` AS `datanoti`,`pergunta`.`idpergunta` AS `idpergunta`,`pergunta`.`destinatario` AS `usuario` from (`notificapergunta` join `pergunta` on((`pergunta`.`idpergunta` = `notificapergunta`.`pergunta`))) */;
+/*!50001 SET character_set_client      = @saved_cs_client */;
+/*!50001 SET character_set_results     = @saved_cs_results */;
+/*!50001 SET collation_connection      = @saved_col_connection */;
+
+--
+-- Final view structure for view `nresposta`
+--
+
+/*!50001 DROP VIEW IF EXISTS `nresposta`*/;
+/*!50001 SET @saved_cs_client          = @@character_set_client */;
+/*!50001 SET @saved_cs_results         = @@character_set_results */;
+/*!50001 SET @saved_col_connection     = @@collation_connection */;
+/*!50001 SET character_set_client      = utf8mb4 */;
+/*!50001 SET character_set_results     = utf8mb4 */;
+/*!50001 SET collation_connection      = utf8mb4_general_ci */;
+/*!50001 CREATE ALGORITHM=UNDEFINED */
+/*!50013 DEFINER=`root`@`localhost` SQL SECURITY DEFINER */
+/*!50001 VIEW `nresposta` AS select `notificaresposta`.`idnotificaresposta` AS `idnotificaresposta`,`notificaresposta`.`resposta` AS `resposta`,`notificaresposta`.`visto` AS `visto`,`notificaresposta`.`datanoti` AS `datanoti`,`resposta`.`idresposta` AS `idresposta`,`resposta`.`pergunta` AS `rPergunta`,`pergunta`.`idpergunta` AS `idpergunta`,`pergunta`.`remetente` AS `usuario` from ((`notificaresposta` join `resposta` on((`notificaresposta`.`resposta` = `resposta`.`idresposta`))) join `pergunta` on((`resposta`.`pergunta` = `pergunta`.`idpergunta`))) */;
+/*!50001 SET character_set_client      = @saved_cs_client */;
+/*!50001 SET character_set_results     = @saved_cs_results */;
+/*!50001 SET collation_connection      = @saved_col_connection */;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
 
 /*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
@@ -454,4 +562,4 @@ DELIMITER ;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2021-05-29 23:43:08
+-- Dump completed on 2021-05-30 21:12:42
