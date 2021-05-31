@@ -152,14 +152,14 @@ echo '  <a href="pergunta.php" class="nav-item nav-link active">Perguntas<span c
 
 }
 .do img{
-  width:3vw;
-  height:3vw;
+  width:3vh;
+  height:3vh;
   border-radius:50%;
 }
 .dn img{
   
-  width:3vw;
-  height:3vw;
+  width:3vh;
+  height:3vh;
   border-radius:50%;
 }
 </style>
