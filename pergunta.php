@@ -81,9 +81,12 @@ require 'menu.php';
 <textarea  rows="8" maxlength="500" id="resp" placeholder="Digite aqui sua resposta ... "></textarea>
 </div>
       </div>
+      
       <div class="modal-footer">
+      <span>Compartilhar</span>
       <div class="form-check form-switch">
   <input class="form-check-input" type="checkbox" id="post">
+
   
 </div>
         <button type="button" id="fecharmodal" class="btn btn-secondary" data-dismiss="modal">Fechar</button>

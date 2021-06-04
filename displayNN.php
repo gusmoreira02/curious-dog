@@ -8,6 +8,7 @@ if(isset($_SESSION['idUsuario'])){
     $executa->execute();
     
     
+    
     if($executa){
         
 		

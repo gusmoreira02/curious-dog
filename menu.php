@@ -16,14 +16,14 @@ $url=$_SERVER["REQUEST_URI"];
             <div class="navbar-nav">
             <?php 
             if($url =="/curiousdog/home.php"){
-              echo '<a href="home.php" class="nav-item nav-link active">Início</a>';
+              echo '<a href="home.php" class="nav-item nav-link active"><i class="fas fa-home"></i></a>';
             }else{
-              echo '<a href="home.php" class="nav-item nav-link ">Início</a>';
+              echo '<a href="home.php" class="nav-item nav-link "><i class="fas fa-home"></i></a>';
             }
             if($url == "/curiousdog/pergunta.php"){
-echo '  <a href="pergunta.php" class="nav-item nav-link active">Perguntas<span class="badge bg-primary">0</span</a>';
+echo '  <a href="pergunta.php" class="nav-item nav-link active"><i class="fas fa-question"></i><span class="badge bg-primary">0</span</a>';
             }else{
-              echo '<a href="pergunta.php" class="nav-item nav-link">Perguntas<span class="badge bg-primary">0</span</a>';
+              echo '<a href="pergunta.php" class="nav-item nav-link"><i class="fas fa-question"></i><span class="badge bg-primary">0</span</a>';
             }
 
 
@@ -34,8 +34,8 @@ echo '  <a href="pergunta.php" class="nav-item nav-link active">Perguntas<span c
 
 
                   
-                <a href="#" class="nav-item nav-link fas fa-bell sino" data-toggle="modal" data-target="#modalnoti" onclick="notifica(<?php echo $_SESSION['idUsuario'] ?>)"><span class="badge bg-primary"></span></a>
-                <a href="procurar.php" class="nav-item nav-link">Procurar</a>
+                <a href="#" class="nav-item nav-link" data-toggle="modal" data-target="#modalnoti" onclick="notifica(<?php echo $_SESSION['idUsuario'] ?>)"><i class="fas fa-bell"></i><span class="badge bg-primary"></span></a>
+                <a href="procurar.php" class="nav-item nav-link"><i class="fas fa-search"> </i></a>
 
   
             </div>
