@@ -16,7 +16,7 @@ if(isset($_SESSION['idUsuario'])){
       
         $linha = $executa->fetchAll(PDO::FETCH_ASSOC);
         array_push($ret,$linha);
-        $executa2 = $db->prepare("select n.idnotificacao as id,usuario.fotoPerfil,usuario.usuario,usuario.apelido,usuario.idusuario, p.idpergunta from notificapergunta as n inner join pergunta as p on n.pergunta = p.idpergunta inner join usuario on usuario.idusuario = p.remetente  where p.destinatario = :id && n.visto =1");
+        $executa2 = $db->prepare("select n.idnotificacao as id,usuario.fotoPerfil,usuario.usuario,usuario.apelido,usuario.idusuario, p.idpergunta from notificapergunta as n inner join pergunta as p on n.pergunta = p.idpergunta inner join usuario on usuario.idusuario = p.remetente  where p.destinatario = :id && n.visto =1 && p.anonimo=0");
 
         $executa2->BindParam(":id",$_SESSION['idUsuario']);
         $executa2->execute();

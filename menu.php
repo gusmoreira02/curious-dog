@@ -35,6 +35,7 @@ echo '  <a href="pergunta.php" class="nav-item nav-link active">Perguntas<span c
 
                   
                 <a href="#" class="nav-item nav-link fas fa-bell sino" data-toggle="modal" data-target="#modalnoti" onclick="notifica(<?php echo $_SESSION['idUsuario'] ?>)"><span class="badge bg-primary"></span></a>
+                <a href="procurar.php" class="nav-item nav-link">Procurar</a>
 
   
             </div>
