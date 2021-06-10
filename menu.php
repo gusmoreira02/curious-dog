@@ -21,9 +21,9 @@ $url=$_SERVER["REQUEST_URI"];
               echo '<a href="home.php" class="nav-item nav-link "><i class="fas fa-home"></i></a>';
             }
             if($url == "/curiousdog/pergunta.php"){
-echo '  <a href="pergunta.php" class="nav-item nav-link active"><i class="fas fa-question"></i><span class="badge bg-primary">0</span</a>';
+echo '  <a href="pergunta.php" class="nav-item nav-link active"><i class="fas fa-question"></i></a>';
             }else{
-              echo '<a href="pergunta.php" class="nav-item nav-link"><i class="fas fa-question"></i><span class="badge bg-primary">0</span</a>';
+              echo '<a href="pergunta.php" class="nav-item nav-link"><i class="fas fa-question"></i></a>';
             }
 
 

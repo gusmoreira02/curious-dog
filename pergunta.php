@@ -86,9 +86,15 @@ require 'menu.php';
       <span>Compartilhar</span>
       <div class="form-check form-switch">
   <input class="form-check-input" type="checkbox" id="post">
+</div>
+
+  <span>Retornar</span>
+      <div class="form-check form-switch">
+  <input class="form-check-input" type="checkbox" id="ret">
 
   
 </div>
+
         <button type="button" id="fecharmodal" class="btn btn-secondary" data-dismiss="modal">Fechar</button>
         <button type="button" class="btn btn-primary" onclick="responder()">Responder</button>
       </div>
@@ -245,22 +251,24 @@ function responder(){
   var resposta = $("#resp").val();
   var mensagem = $("#mens").val();
   var post =$("#post").is(':checked');
+  var ret =$("#ret").is(':checked');
 console.log(post);
 
  $.ajax({
   type: "POST",
   url: "modalresponder.php",
-  data: {'idpergunta':idpe , 'resposta':resposta,'pergunta':mensagem,'post':post},
+  data: {'idpergunta':idpe , 'resposta':resposta,'pergunta':mensagem,'post':post, 'ret':ret},
   
   beforeSend: function(){
     $("#fecharmodal").click();
     $("#"+idpe).parent().remove();
     $("#post").prop('checked',false);
+    $("#ret").prop('checked',false);
     $("#resp").val("");
   }
  
 }).done(function(data){
-  document.location.reload();
+ // document.location.reload();
   console.log(data);
 });
   
